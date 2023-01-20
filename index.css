@@ -1,3 +1,36 @@
-#container {
-  background-color: yellow;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  border: 1px solid black;
+}
+
+.nav-items > ul {
+  display: flex;
+  list-style: none;
+}
+
+.nav-items > ul > li {
+  padding: 10px;
+}
+
+.logo {
+  width: 100px;
+}
+
+.card {
+  margin: 10px;
+  padding: 10px;
+  width: 200px;
+  border: 1px solid black;
+}
+
+.card > img {
+  width: 100%;
+}
+
+.restaurant-list {
+  display: flex;
+  flex-wrap: wrap;
 }
