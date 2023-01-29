@@ -1,18 +1,41 @@
-import { useState } from "react";
-import { restaurantList } from "../constants";
+import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
+import { API_URL } from "../constants";
+import Shimmer from "./Shimmer";
 
-function filterData(searchText, restaurants) {
-  const filteredData = restaurants.filter((restaurant) =>
+function filterData(searchText, allRestaurants) {
+  const filteredData = allRestaurants.filter((restaurant) =>
     restaurant.data.name.toLowerCase().includes(searchText.toLowerCase())
   );
+  console.log(filteredData);
   return filteredData;
 }
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
-  const [restaurants, setRestaurants] = useState(restaurantList);
-  return (
+  const [allRestaurants, setAllRestaurants] = useState([]);
+  const [filteredRestaurants, setfilteredRestaurants] = useState([]);
+
+  async function getRestaurants() {
+    try {
+      const data = await fetch(API_URL);
+      const json = await data.json();
+      // console.log(json);
+      setAllRestaurants(json?.data?.cards?.[2]?.data?.data?.cards);
+      setfilteredRestaurants(json?.data?.cards?.[2]?.data?.data?.cards);
+    } catch (error) {
+      console.log("There was an error", error);
+    }
+    // console.log(allRestaurants);
+  }
+
+  useEffect(() => {
+    getRestaurants();
+  }, []);
+
+  return allRestaurants?.length === 0 ? (
+    <Shimmer />
+  ) : (
     <>
       <div className="search-container">
         <input
@@ -27,19 +50,23 @@ const Body = () => {
         <button
           className="search-btn"
           onClick={() => {
-            const filtedData = filterData(searchText, restaurantList);
-            setRestaurants(filtedData);
+            const filtedData = filterData(searchText, allRestaurants);
+            setfilteredRestaurants(filtedData);
           }}
         >
           Search
         </button>
       </div>
       <div className="restaurant-list">
-        {restaurants.map((restaurant) => {
-          return (
-            <RestaurantCard {...restaurant.data} key={restaurant.data.id} />
-          );
-        })}
+        {filteredRestaurants?.length === 0 ? (
+          <h1>No results found</h1>
+        ) : (
+          filteredRestaurants.map((restaurant) => {
+            return (
+              <RestaurantCard {...restaurant.data} key={restaurant.data.id} />
+            );
+          })
+        )}
       </div>
     </>
   );

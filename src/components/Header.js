@@ -20,6 +20,7 @@ const Header = () => {
           <li>Cart</li>
         </ul>
       </div>
+      <button>login</button>
     </div>
   );
 };
