@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import { API_URL } from "../constants";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 function filterData(searchText, allRestaurants) {
   const filteredData = allRestaurants.filter((restaurant) =>
@@ -20,8 +21,9 @@ const Body = () => {
     try {
       const data = await fetch(API_URL);
       const json = await data.json();
-      // console.log(json);
-      setAllRestaurants(json?.data?.cards?.[2]?.data?.data?.cards);
+      console.log(json);
+      setAllRestaurants(json?.data?.cards?.[2].data?.data?.cards);
+      console.log(allRestaurants);
       setfilteredRestaurants(json?.data?.cards?.[2]?.data?.data?.cards);
     } catch (error) {
       console.log("There was an error", error);
@@ -63,7 +65,9 @@ const Body = () => {
         ) : (
           filteredRestaurants.map((restaurant) => {
             return (
-              <RestaurantCard {...restaurant.data} key={restaurant.data.id} />
+              <Link to={"/restaurant/" + restaurant.data.id}>
+                <RestaurantCard {...restaurant.data} key={restaurant.data.id} />
+              </Link>
             );
           })
         )}

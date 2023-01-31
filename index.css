@@ -1,9 +1,22 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Code&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&family=Zen+Dots&display=swap");
+
+.app {
+  margin: auto;
+  width: 90%;
+}
+
+.search-container {
+  margin: 10px;
+}
 .header {
   display: flex;
+  font-family: "Poppins", sans-serif;
   justify-content: space-between;
   align-items: center;
   margin: 10px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  margin-right: 105px;
 }
 
 .nav-items > ul {
@@ -16,14 +29,16 @@
 }
 
 .logo {
+  margin-left: -20px;
   width: 100px;
 }
 
 .card {
   margin: 10px;
   padding: 10px;
-  width: 200px;
-  border: 1px solid black;
+  width: 300px;
+  box-shadow: 0px 0px 10px 0 #a9a9a9;
+  box-sizing: border-box;
 }
 
 .card > img {
@@ -33,4 +48,181 @@
 .restaurant-list {
   display: flex;
   flex-wrap: wrap;
+}
+
+.restaurant-list-shimmer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-shimmer {
+  border: 2px solid #fff;
+  box-shadow: 0px 0px 10px 0 #a9a9a9;
+  margin: 10px;
+  padding: 10px;
+  width: 300px;
+  height: 300px;
+  box-sizing: border-box;
+}
+
+.img-shimmer {
+  background-color: rgb(214, 213, 213);
+  width: 100%;
+  height: 50%;
+  border-radius: 2px;
+  animation: shimmer 5s infinite linear;
+  background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
+  background-size: 1000px 100%;
+}
+
+.heading-shimmer {
+  background-color: rgb(221, 218, 218);
+  width: 90%;
+  height: 10%;
+  margin-top: 10px;
+  border-radius: 2px;
+  animation: shimmer 5s infinite linear;
+  background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
+  background-size: 1000px 100%;
+}
+.details-shimmer {
+  background-color: rgb(238, 238, 238);
+  width: 70%;
+  height: 7%;
+  margin: 10px 0px 0px 0px;
+  border-radius: 2px;
+  animation: shimmer 5s infinite linear;
+  background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
+  background-size: 1000px 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.error-container {
+  box-sizing: border-box;
+  font-family: "Fira Code", monospace;
+  height: 100vh;
+  background-color: #ecf0f1;
+  text-align: center;
+  overflow-y: hidden;
+}
+.error-container > img {
+  margin-top: 10%;
+  width: 256px;
+  height: 225px;
+}
+
+.error-container > span {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+}
+
+.hero-section {
+  font-family: "Fira Code", monospace;
+  display: flex;
+  justify-content: center;
+  background-color: #171a29;
+  color: white;
+  margin: 10px;
+  padding: 40px;
+  border-radius: 5px;
+}
+
+.hero-section > h1 {
+  font-weight: 300;
+  font-size: 32px;
+}
+.hero-section > img {
+  width: 300px;
+  height: 200px;
+  border-radius: 5px;
+}
+.hero-section-details > span {
+  margin-bottom: 30px;
+}
+.hero-section-details {
+  margin-left: 80px;
+}
+.hero-section-extra-details {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  padding-top: 20px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.hero-section-extra-details .item {
+  padding-right: 35px;
+  border-right: 1px solid white;
+}
+.hero-section-extra-details .item2 {
+  font-weight: 200;
+  font-size: 14px;
+}
+.menu-section {
+  width: 60%;
+  margin: auto;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+}
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+  padding: 20px;
+  border-bottom: 1px solid black;
+}
+.item-img > img {
+  width: 150px;
+  height: 150px;
+}
+
+.item-details {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.item-name {
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+}
+.item-desc {
+  color: #666666;
+}
+.item-img {
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-to-cart-btn {
+  font-family: "Poppins", sans-serif;
+  width: 100px;
+  height: 30px;
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+
+a{
+  text-decoration: none;
+  color: inherit;
 }
