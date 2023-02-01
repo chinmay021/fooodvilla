@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Fira+Code&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&family=Zen+Dots&display=swap");
+@import url("https://css.gg/search.css");
 
 .app {
   margin: auto;
@@ -7,8 +8,45 @@
 }
 
 .search-container {
-  margin: 10px;
+  margin: 50px 0px 50px 10px;
+  display: flex;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
 }
+.search-container input {
+  box-sizing: border-box;
+  padding: 0px 10px;
+  font-size: large;
+  height: 50px;
+  width: 30%;
+  border-color: black;
+  border-width: 1px;
+  border-radius: 6px 0px 0px 6px;
+  border-right: none;
+  background-color: #ffffff;
+  color: rgb(43, 43, 43);
+}
+.search-container input::placeholder {
+  color: rgb(43, 43, 43);
+}
+.search-container input:focus {
+  outline: none;
+}
+.search-container button {
+  box-sizing: border-box;
+  height: 50px;
+  width: 100px;
+  background-color: #ff7b00;
+  color: white;
+  /* padding-left: 5px; */
+  font-size: larger;
+  border-left: none;
+  cursor: pointer;
+  border-radius: 0px 6px 6px 0px;
+  border-width: 1px;
+  border-color: black;
+}
+
 .header {
   display: flex;
   font-family: "Poppins", sans-serif;
@@ -34,15 +72,39 @@
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
   margin: 10px;
   padding: 10px;
   width: 300px;
+  height: 450px;
   box-shadow: 0px 0px 10px 0 #a9a9a9;
   box-sizing: border-box;
+  border-radius: 5px;
 }
 
+.card h2 {
+  font-weight: 500;
+}
+.card h4 {
+  color: white;
+  font-weight: 400;
+  text-align: center;
+  width: 50px;
+  border-radius: 5px;
+  /* background-color: #48c479; */
+}
+.hotel-extra-details {
+  font-size: medium;
+  display: flex;
+  gap: 70px;
+}
 .card > img {
   width: 100%;
+  border-radius: 5px;
 }
 
 .restaurant-list {
@@ -173,6 +235,7 @@ html {
   font-size: 14px;
 }
 .menu-section {
+  background-color: #f8fcfd;
   width: 60%;
   margin: auto;
   font-family: "Poppins", sans-serif;
@@ -221,8 +284,21 @@ html {
   cursor: pointer;
 }
 
-
-a{
+a {
   text-decoration: none;
   color: inherit;
+}
+.footer {
+  font-family: "Poppins", sans-serif;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  color: white;
+}
+.footer h1 {
+  text-align: center;
+  font-size: small;
+  font-weight: 400;
 }

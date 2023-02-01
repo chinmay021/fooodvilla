@@ -43,7 +43,7 @@ const Body = () => {
         <input
           type="text"
           className="search-input"
-          placeholder="Search"
+          placeholder="Search for restaurants"
           value={searchText}
           onChange={(e) => {
             setSearchText(e.target.value);
