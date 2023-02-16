@@ -1,15 +1,18 @@
 const Shimmer = () => {
   return (
     <>
-      <div className="restaurant-list-shimmer">
+      <div className="flex flex-wrap">
         {Array(10)
           .fill([])
           .map((e, index) => (
-            <div key={index} className="card-shimmer">
-              <div className="img-shimmer"></div>
-              <div className="heading-shimmer"></div>
-              <div className="details-shimmer"></div>
-              <div className="details-shimmer"></div>
+            <div key={index} className="shadow-lg m-3 p-3 w-72 h-72">
+              <div className="w-full h-1/2 border rounded-sm bg-64 custom-linear-gradient animate-shimmer"></div>
+              <div
+                className="w-[90%] h-[10%] mt-3 border rounded-sm
+               bg-64 custom-linear-gradient animate-shimmer "
+              ></div>
+              <div className="w-[70%] h-[7%]  mt-3 border rounded-sm bg-64 custom-linear-gradient animate-shimmer"></div>
+              <div className="w-[70%] h-[7%]  mt-3 border rounded-sm bg-64 custom-linear-gradient animate-shimmer"></div>
             </div>
           ))}
       </div>

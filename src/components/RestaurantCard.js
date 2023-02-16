@@ -9,11 +9,15 @@ const RestaurantCard = ({
   deliveryTime,
 }) => {
   return (
-    <div className="card">
-      <img src={IMG_CDN_URL + cloudinaryImageId}></img>
-      <h2>{name}</h2>
-      <span>{cuisines.join(", ")}</span>
-      <h4
+    <div className="flex flex-col overflow-hidden m-3 p-3 w-72 h-[28rem] shadow-lg rounded-md hover:bg-slate-100 duration-300 font-poppins">
+      <img
+        className="w-full border rounded-md"
+        src={IMG_CDN_URL + cloudinaryImageId}
+      ></img>
+      <span className="block font-bold text-lg mt-3 ">{name}</span>
+      <span className="mt-3 text-gray-600">{cuisines.join(", ")}</span>
+      <span
+        className="w-12 text-center mt-3 border rounded-md text-white"
         style={
           avgRating >= 4
             ? { backgroundColor: "#48c479" }
@@ -25,10 +29,10 @@ const RestaurantCard = ({
         }
       >
         {avgRating} &#9733;
-      </h4>
-      <div className="hotel-extra-details">
-        <span className="hotel-cost">{costForTwoString}</span>
-        <span className="hotel-delivery-time">{deliveryTime} MINS</span>
+      </span>
+      <div className="flex gap-20  mt-5 ">
+        <span className="font-medium">{costForTwoString}</span>
+        <span className="font-medium">{deliveryTime} MINS</span>
       </div>
     </div>
   );
