@@ -52,3 +52,5 @@ Thumbs.db
 
 .parcel-cache
 .vscode
+# Local Netlify folder
+.netlify
