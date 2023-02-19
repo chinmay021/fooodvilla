@@ -7,6 +7,9 @@ import Error from "./components/Error";
 import Contact from "./components/Contact";
 import RestaurantMenu from "./components/RestaurantMenu";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./utils/store";
+import CartPage from "./components/CartPage";
 
 // App Layout
 /**
@@ -31,11 +34,15 @@ const About = lazy(() => import("./components/About"));
 
 const AppLayout = () => {
   return (
-    <div className="m-auto w-[85%] min-h-screen flex flex-col box-border">
-      <Header />
-      <Outlet />
-      <Footer />
-    </div>
+    <Provider store={store}>
+      <div
+        className={`m-auto w-fit min-w-[80vw] min-h-screen flex flex-col box-border border`}
+      >
+        <Header />
+        <Outlet />
+        <Footer />
+      </div>
+    </Provider>
   );
 };
 
@@ -64,6 +71,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurant/:resId",
         element: <RestaurantMenu />,
+      },
+      {
+        path: "/cart",
+        element: <CartPage />,
       },
     ],
   },
