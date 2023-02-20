@@ -9,9 +9,9 @@ const RestaurantCard = ({
   deliveryTime,
 }) => {
   return (
-    <div className="flex flex-col overflow-hidden m-3 p-3 w-72  rounded-md hover:shadow-xl duration-300 font-poppins">
+    <div className="flex flex-col overflow-hidden m-3 p-3 w-72  rounded-sm hover:shadow-xl duration-300 font-poppins">
       <img
-        className="w-full border rounded-md"
+        className="w-full border rounded-sm"
         src={IMG_CDN_URL + cloudinaryImageId}
       ></img>
       <span className="block font-bold text-lg mt-3 ">{name}</span>

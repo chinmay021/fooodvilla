@@ -33,13 +33,13 @@ const RestaurantMenu = () => {
   ) : (
     <>
       <div className="bg-slate-50 w-fit">
-        <div className="font-fira-code flex flex-wrap justify-center bg-[#171a29] text-white my-10 p-10 ">
+        <div className="font-fira-code flex gap-10 flex-wrap justify-center bg-[#171a29] text-white my-10 p-10 ">
           <img
-            className="w-80 h-52 rounded-md"
+            className="w-80 h-52 rounded-sm"
             src={IMG_CDN_URL + restaurant.cloudinaryImageId}
             alt=""
           />
-          <div className="ml-20 ">
+          <div className="">
             <span
               className="block font-semibold text-2xl mb-4 max-sm:mt-5 max-sm:ml-4 max-sm:text-sm
           "
@@ -122,7 +122,7 @@ const RestaurantMenu = () => {
                   }
                   alt="empty cart"
                 />
-                <span className="font-fira-code font-medium">
+                <span className="font-poppins font-bold">
                   Your cart is empty
                 </span>
               </div>

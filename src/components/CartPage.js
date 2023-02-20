@@ -23,13 +23,13 @@ const CartPage = () => {
             alt="empty cart"
           />
 
-          <span className="font-fira-code">Your cart is empty</span>
+          <span className="font-poppins">Your cart is empty</span>
           {/* <p className="font-fira-code text-xs">
             You can go to home page to view more restaurants
           </p> */}
           <div className="">
             <Link to="/">
-              <button className="font-fira-code bg-slate-900 p-2 text-white mt-2">
+              <button className="font-poppins bg-slate-900 p-2 text-white mt-2">
                 see restaurants near you
               </button>
             </Link>

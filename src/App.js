@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
 import Error from "./components/Error";
-import Contact from "./components/Contact";
+import Help from "./components/Help";
 import RestaurantMenu from "./components/RestaurantMenu";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -65,8 +65,8 @@ const appRouter = createBrowserRouter([
         ),
       },
       {
-        path: "/contact",
-        element: <Contact />,
+        path: "/help",
+        element: <Help />,
       },
       {
         path: "/restaurant/:resId",

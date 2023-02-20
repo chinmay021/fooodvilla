@@ -34,13 +34,13 @@ const Cart = () => {
     <div
       className={` ${
         0 && !cartItems.length && "hidden"
-      } w-fit h-fit m-8 p-8 bg-white shadow-md font-fira-code text-sm flex flex-col`}
+      } w-fit h-fit m-8 p-8 bg-white shadow-md font-poppins text-sm flex flex-col`}
     >
       <div className="flex justify-between mb-5 border-b-2 ">
         <div className="flex w-full pb-2 justify-between items-center">
           <span className="font-bold ">cart items</span>
           <button
-            className=" font-fira-code bg-slate-900 px-2 py-1 text-white"
+            className=" font-poppins bg-slate-900 px-2 py-1 text-white"
             onClick={handleClearCart}
           >
             {" "}
@@ -77,7 +77,7 @@ const Cart = () => {
         <span>Total</span>
         <span>&#8377;{(getTotal() + 0.0) / 100}</span>
       </div>
-      <button className="font-fira-code bg-slate-900 mt-4 p-2 text-white ">
+      <button className="font-poppins bg-slate-900 mt-4 p-2 text-white ">
         Checkout
       </button>
     </div>
