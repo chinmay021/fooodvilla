@@ -6,9 +6,13 @@ export const IMG_CDN_URL =
 export const IMG__MENU_ITEM_CDN_URL =
   "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/";
 
+export const API_URL3 =
+  CORS_PROXY_URL +
+  "/dapi/restaurants/list/v5?lat=22.814794130574803&lng=86.09871324151756&sortBy=RELEVANCE&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING";
+
 export const API_URL =
   CORS_PROXY_URL +
-  "https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.814794130574803&lng=86.09871324151756&page_type=DESKTOP_WEB_LISTING";
+  "/dapi/restaurants/list/v5?lat=22.814794130574803&lng=86.09871324151756&page_type=DESKTOP_WEB_LISTING";
 
 export const API_URL2 =
   CORS_PROXY_URL +

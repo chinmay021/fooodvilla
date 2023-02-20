@@ -32,6 +32,7 @@ import CartPage from "./components/CartPage";
 
 const About = lazy(() => import("./components/About"));
 
+
 const AppLayout = () => {
   return (
     <Provider store={store}>

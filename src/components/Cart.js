@@ -51,7 +51,7 @@ const Cart = () => {
       <div className="border-b-2">
         {cartItems.map((item) => {
           return (
-            <div className="pl-2 pb-2 flex justify-between items-center gap-1 my-2 ">
+            <div key={item.id} className="pl-2 pb-2 flex justify-between items-center gap-1 my-2 ">
               <img
                 className="w-12"
                 src={IMG__MENU_ITEM_CDN_URL + item?.cloudinaryImageId}

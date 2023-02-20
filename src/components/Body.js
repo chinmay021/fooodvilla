@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
-import { API_URL2 } from "../constants";
+import { API_URL, API_URL3 } from "../constants";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { filterData } from "../utils/helper";
@@ -10,21 +10,56 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
   const [allRestaurants, setAllRestaurants] = useState([]);
   const [filteredRestaurants, setfilteredRestaurants] = useState([]);
+  const [offset, setOffset] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const totalOpenRestaurants = useRef(0);
 
-  async function getRestaurants() {
+  async function getRestaurants(url = API_URL) {
     try {
-      const data = await fetch(API_URL2);
+      const data = await fetch(url);
       const json = await data.json();
-      setAllRestaurants(json?.data?.cards?.[2].data?.data?.cards);
-      setfilteredRestaurants(json?.data?.cards?.[2]?.data?.data?.cards);
+      if (url === API_URL) {
+        setAllRestaurants(json?.data?.cards?.[2].data?.data?.cards);
+        setfilteredRestaurants(json?.data?.cards?.[2]?.data?.data?.cards);
+        totalOpenRestaurants.current =
+          json?.data?.cards?.[2]?.data?.data.totalOpenRestaurants;
+      } else {
+        const arr = json?.data?.cards;
+        const restaurantList = arr.map((item) => {
+          return item?.data;
+        });
+        setAllRestaurants([...allRestaurants, ...restaurantList]);
+        setfilteredRestaurants([...filteredRestaurants, ...restaurantList]);
+        setIsLoading(false);
+      }
     } catch (error) {
       console.log("There was an error", error);
     }
   }
 
+  const handelInfiniteScroll = async () => {
+    // console.log("scrollHeight" + document.documentElement.scrollHeight);
+    // console.log("innerHeight" + window.innerHeight);
+    // console.log("scrollTop" + document.documentElement.scrollTop);
+    try {
+      if (
+        window.innerHeight + document.documentElement.scrollTop + 10 >=
+          document.documentElement.scrollHeight &&
+        offset + 16 <= totalOpenRestaurants.current
+      ) {
+        setIsLoading(true);
+        setOffset(offset + 16);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    getRestaurants();
-  }, []);
+    offset ? getRestaurants(`${API_URL3}&offset=+${offset}`) : getRestaurants();
+    window.addEventListener("scroll", handelInfiniteScroll);
+    return () => window.removeEventListener("scroll", handelInfiniteScroll);
+  }, [offset]);
 
   const onlineStatus = useOnlineStatus();
 
@@ -90,6 +125,7 @@ const Body = () => {
               );
             })
           )}
+          {isLoading && <Shimmer />}
         </div>
       </div>
     </>
