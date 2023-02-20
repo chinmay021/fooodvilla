@@ -97,7 +97,7 @@ const RestaurantMenu = () => {
                           (event.target.style.display = "none")
                         }
                       />
-                      <div className="flex justify-between font-fira-code w-20 border bg-slate-900  text-white py-[2px] px-2">
+                      <div className="flex justify-between font-poppins w-20 border bg-slate-50 text-black py-[2px] px-2">
                         <button onClick={() => handleDecreamentFoodItem(item)}>
                           -
                         </button>

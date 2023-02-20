@@ -51,7 +51,10 @@ const Cart = () => {
       <div className="border-b-2">
         {cartItems.map((item) => {
           return (
-            <div key={item.id} className="pl-2 pb-2 flex justify-between items-center gap-1 my-2 ">
+            <div
+              key={item.id}
+              className="pl-2 pb-2 flex justify-between items-center gap-1 my-2 "
+            >
               <img
                 className="w-12"
                 src={IMG__MENU_ITEM_CDN_URL + item?.cloudinaryImageId}
@@ -59,7 +62,7 @@ const Cart = () => {
                 onError={(event) => (event.target.style.display = "block")}
               />
               <div className="w-60 ">{item.name}</div>
-              <div className="flex justify-between font-fira-code w-20 h-7 border bg-slate-900  text-white py-[2px] px-2">
+              <div className="flex justify-between font-poppins w-20 h-7 border bg-slate-50 text-black py-[2px] px-2">
                 <button onClick={() => handleDecreamentFoodItem(item)}>
                   -
                 </button>
