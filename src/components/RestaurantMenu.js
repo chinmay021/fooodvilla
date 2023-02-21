@@ -33,11 +33,11 @@ const RestaurantMenu = () => {
   ) : (
     <>
       <div className="bg-slate-50 w-fit">
-        <div className="font-fira-code flex gap-10 flex-wrap justify-center bg-[#171a29] text-white my-10 p-10 ">
+        <div className="font-poppins flex gap-10 flex-wrap justify-center bg-[#171a29] text-white my-10 p-10 ">
           <img
             className="w-80 h-52 rounded-sm"
             src={IMG_CDN_URL + restaurant.cloudinaryImageId}
-            alt=""
+            alt="restaurant dish image"
           />
           <div className="">
             <span
@@ -90,9 +90,9 @@ const RestaurantMenu = () => {
                     </div>
                     <div className=" w-40 flex flex-col justify-between items-center gap-3">
                       <img
-                        className="w-40 aspect-auto max-sm:max-w-[100px]  max-sm:aspect-auto"
+                        className="w-40 h-auto max-sm:max-w-[100px]  max-sm:aspect-auto"
                         src={IMG__MENU_ITEM_CDN_URL + item?.cloudinaryImageId}
-                        alt=""
+                        alt="dish image"
                         onError={(event) =>
                           (event.target.style.display = "none")
                         }

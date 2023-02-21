@@ -13,6 +13,7 @@ const RestaurantCard = ({
       <img
         className="w-full border rounded-sm"
         src={IMG_CDN_URL + cloudinaryImageId}
+        alt="image of a dish from the restaurant"
       ></img>
       <span className="block font-bold text-lg mt-3 ">{name}</span>
       <span className="mt-3 text-gray-600">{cuisines.join(", ")}</span>

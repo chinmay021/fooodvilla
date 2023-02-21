@@ -1,5 +1,6 @@
 import { GITHUB_LINK, GMAIL_LINK, LINKEDIN_LINK } from "../constants";
 import { SiGithub, SiLinkedin, SiGoogle } from "react-icons/si";
+import avatar from "../../assets/avatar.jpg";
 
 const About = () => {
   return (
@@ -8,7 +9,8 @@ const About = () => {
         <p className="font-medium text-xl w-full text-center py-2">About Me</p>
         <img
           className="rounded-full w-[150px] h-[150px] border-none align-middle"
-          src={"https://avatars.githubusercontent.com/u/37647219?v=4"}
+          src={avatar}
+          alt="user photo"
         />
         <div className="bg-slate-900 text-white p-4 rounded-sm">
           <p className="pb-4 text-lg font-normal text-slate-300 text-center">
