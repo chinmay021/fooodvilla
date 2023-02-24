@@ -1,6 +1,5 @@
 const CORS_PROXY_URL = "/api/";
 
-export const GOOGLE_API_KEY = "AIzaSyBo3f722I_dfwCp6DiL_KvDkD6lDNLsREQ";
 
 export const IMG_CDN_URL =
   "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";

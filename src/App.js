@@ -52,7 +52,7 @@ const AppLayout = () => {
     const options = {
       method: "GET",
       headers: {
-        "X-RapidAPI-Key": "c0ac3ed3c5msh912f807c2948756p1f14e9jsn8b9e8a4bb0be",
+        "X-RapidAPI-Key": `${process.env.REACT_APP_RAPID_API_KEY}`,
         "X-RapidAPI-Host": "trueway-geocoding.p.rapidapi.com",
       },
     };

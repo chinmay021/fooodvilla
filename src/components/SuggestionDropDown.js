@@ -16,7 +16,7 @@ const SuggestionDropDown = ({
 
   const getLocation = async (searchParam) => {
     const response = await fetch(
-      `https://geocode.search.hereapi.com/v1/geocode?q=${searchParam}&apiKey=mPRL5FAIhx5miqZZYRUSUONrrYI5p1-6kt2oG_lTMx8`
+      `https://geocode.search.hereapi.com/v1/geocode?q=${searchParam}&apiKey=${process.env.REACT_APP_HERE_API_KEY}`
     );
     const data = await response.json();
     console.log(data?.items?.[0]);
