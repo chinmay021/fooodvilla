@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import { API_URL, API_URL3 } from "../constants";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { filterData } from "../utils/helper";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import LocationContext from "../utils/LocationContext";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
@@ -14,15 +15,36 @@ const Body = () => {
   const [isLoading, setIsLoading] = useState(false);
   const totalOpenRestaurants = useRef(0);
 
+  // const location = useGetAddress();
+  // console.log(location);
+
+  const { locationGlobal } = useContext(LocationContext);
+  const latitude = locationGlobal?.coordinates?.latitude;
+  console.log("latitude: " + latitude);
+  const longitude = locationGlobal?.coordinates?.longitude;
+  // console.log(location.coordinates.latitude, location.coordinates.longitude);
+
   async function getRestaurants(url = API_URL) {
     try {
-      const data = await fetch(url);
+      console.log(url, latitude, longitude);
+      //lat=22.814794130574803&lng=86.09871324151756
+      const data = await fetch(
+        `${url}lat=${latitude}&lng=${longitude}&offset=${offset}`
+      );
       const json = await data.json();
+      console.log(json.data.cards);
       if (url === API_URL) {
-        setAllRestaurants(json?.data?.cards?.[2].data?.data?.cards);
-        setfilteredRestaurants(json?.data?.cards?.[2]?.data?.data?.cards);
-        totalOpenRestaurants.current =
-          json?.data?.cards?.[2]?.data?.data.totalOpenRestaurants;
+        if (json?.data?.cards?.length === 1) {
+          setAllRestaurants(json?.data?.cards?.[0].data?.data?.cards);
+          setfilteredRestaurants(json?.data?.cards?.[0]?.data?.data?.cards);
+          totalOpenRestaurants.current =
+            json?.data?.cards?.[0]?.data?.data.totalOpenRestaurants;
+        } else {
+          setAllRestaurants(json?.data?.cards?.[2].data?.data?.cards);
+          setfilteredRestaurants(json?.data?.cards?.[2]?.data?.data?.cards);
+          totalOpenRestaurants.current =
+            json?.data?.cards?.[2]?.data?.data.totalOpenRestaurants;
+        }
       } else {
         const arr = json?.data?.cards;
         const restaurantList = arr.map((item) => {
@@ -56,10 +78,13 @@ const Body = () => {
   };
 
   useEffect(() => {
-    offset ? getRestaurants(`${API_URL3}&offset=+${offset}`) : getRestaurants();
+    console.log("useEffect called", latitude);
+    if (latitude) {
+      offset ? getRestaurants(API_URL3) : getRestaurants();
+    }
     window.addEventListener("scroll", handelInfiniteScroll);
     return () => window.removeEventListener("scroll", handelInfiniteScroll);
-  }, [offset]);
+  }, [offset, latitude, longitude]);
 
   const onlineStatus = useOnlineStatus();
 

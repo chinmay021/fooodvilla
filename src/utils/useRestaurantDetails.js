@@ -5,10 +5,6 @@ const useRestaurantDetails = (resId) => {
   const [restaurant, setRestaurant] = useState(null);
 
   //get data from API
-  useEffect(() => {
-    getRestaurantInfo();
-  }, []);
-
   async function getRestaurantInfo() {
     try {
       const data = await fetch(FETCH_MENU_URL + resId);
@@ -18,6 +14,10 @@ const useRestaurantDetails = (resId) => {
       console.log("There was an error", error);
     }
   }
+  useEffect(() => {
+    getRestaurantInfo();
+  }, []);
+
   return restaurant;
 };
 

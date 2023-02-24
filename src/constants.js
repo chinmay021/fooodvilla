@@ -1,5 +1,7 @@
 const CORS_PROXY_URL = "/api/";
 
+export const GOOGLE_API_KEY = "AIzaSyBo3f722I_dfwCp6DiL_KvDkD6lDNLsREQ";
+
 export const IMG_CDN_URL =
   "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
 
@@ -8,11 +10,14 @@ export const IMG__MENU_ITEM_CDN_URL =
 
 export const API_URL3 =
   CORS_PROXY_URL +
-  "/dapi/restaurants/list/v5?lat=22.814794130574803&lng=86.09871324151756&sortBy=RELEVANCE&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING";
+  "/dapi/restaurants/list/v5?sortBy=RELEVANCE&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING&";
 
+export const API_URL4 =
+  CORS_PROXY_URL +
+  "/dapi/restaurants/list/v5?page_type=DESKTOP_WEB_LISTING&lat=22.814794130574803&lng=86.09871324151756";
 export const API_URL =
   CORS_PROXY_URL +
-  "/dapi/restaurants/list/v5?lat=22.814794130574803&lng=86.09871324151756&page_type=DESKTOP_WEB_LISTING";
+  "/dapi/restaurants/list/v5?page_type=DESKTOP_WEB_LISTING&";
 
 export const API_URL2 =
   CORS_PROXY_URL +
@@ -27,6 +32,8 @@ export const GMAIL_LINK = "mailto:chinmaykumar021@gmail.com";
 
 export const LINKEDIN_LINK =
   "https://www.linkedin.com/in/chinmay-kumar-950754144/";
+
+export const HERE_MAP_API_KEY = "mPRL5FAIhx5miqZZYRUSUONrrYI5p1-6kt2oG_lTMx8";
 
 /* Mock FAQ */
 export const FAQ = [

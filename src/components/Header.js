@@ -2,6 +2,12 @@ import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { BsCart4 } from "react-icons/bs";
+import { TbCurrentLocation } from "react-icons/tb";
+import useGetAddress from "../utils/useGetAddress";
+import { useContext, useState } from "react";
+import { HERE_MAP_API_KEY } from "../constants";
+import LocationSideBar from "./LocationSideBar";
+import AddressContext from "../utils/AddressContext";
 
 const Logo = () => {
   return (
@@ -12,12 +18,21 @@ const Logo = () => {
 };
 
 const Header = () => {
+  const [toggleLocationSideBar, setToggleLocationBar] = useState(false);
   // const cartItems = useSelector(store => store.cart.items);
   const cartTotalCount = useSelector((store) => store.cart.totalItemCount);
 
+  // const [address,setAddress] = useState(useGetAddress());
+  // const address = useGetAddress();
+  const { addressGlobal } = useContext(AddressContext);
+  console.log(addressGlobal);
+
   return (
     <div className="flex justify-between items-center  shadow-md z-10">
-      <Logo />
+      <div className="flex items-center">
+        <Logo />
+        <span className="font-poppins text-xs text-orange-400">{addressGlobal?.length > 50 ? `${addressGlobal?.slice(0,50)}...` : addressGlobal}</span>
+      </div>
       <div>
         <ul className="flex list-none pr-14 font-poppins">
           <li className="p-3 mr-10">
@@ -31,17 +46,35 @@ const Header = () => {
           </li>
           <li className="pt-3 px-3 mr-10">
             <Link to="/cart" className="flex gap-1 items-center">
-              <BsCart4 className="inline text-xl" />
+              <BsCart4 className="inline text-2xl text-orange-400" />
               <span className=" font-bold text-orange-400 p-[1px]">
-                {cartTotalCount ? (
-                  <div>{cartTotalCount}</div>
-                ) : (
-                  ""
-                )}
+                {cartTotalCount ? <div>{cartTotalCount}</div> : ""}
               </span>
             </Link>
           </li>
+          <button
+            onClick={() => {
+              setToggleLocationBar(true);
+            }}
+            className="flex items-center"
+          >
+            <TbCurrentLocation className="text-xl text-orange-400" />
+            <span>location</span>
+          </button>
+          {/* <input
+            className="border ml-3 pl-5"
+            placeholder="enter your location"
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+              if (e.target.value.length > 2) getAutoCompletion(e.target.value);
+            }}
+          /> */}
         </ul>
+        <LocationSideBar
+          isVisible={toggleLocationSideBar}
+          setToggle={(param) => setToggleLocationBar(param && true)}
+        />
       </div>
       {/* <button>login</button> */}
     </div>
