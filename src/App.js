@@ -21,6 +21,7 @@ import LocationContext from "./utils/LocationContext";
 import useGetLocation from "./utils/useGetLocation";
 import AddressContext from "./utils/AddressContext";
 import useGetAddress from "./utils/useGetAddress";
+import Checkout from "./components/Checkout";
 
 // App Layout
 /**
@@ -47,23 +48,33 @@ const AppLayout = () => {
   const [addressGlobal, setAddressGlobal] = useState(null);
 
   //get address code
+  // const getAddress = async (latitude, longitude) => {
+  //   console.log("get address api called", latitude, longitude);
+  //   const options = {
+  //     method: "GET",
+  //     headers: {
+  //       "X-RapidAPI-Key": `${process.env.REACT_APP_RAPID_API_KEY}`,
+  //       "X-RapidAPI-Host": "trueway-geocoding.p.rapidapi.com",
+  //     },
+  //   };
+  //   const response = await fetch(
+  //     `https://trueway-geocoding.p.rapidapi.com/ReverseGeocode?location=${latitude}%20%2C${longitude}&language=en`,
+  //     options
+  //   );
+  //   console.log(latitude, longitude);
+  //   const data = await response.json();
+  //   console.log(data);
+  //   setAddressGlobal(data?.results?.[0]?.address);
+  // };
+
   const getAddress = async (latitude, longitude) => {
-    console.log("get address api called", latitude, longitude);
-    const options = {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": `${process.env.REACT_APP_RAPID_API_KEY}`,
-        "X-RapidAPI-Host": "trueway-geocoding.p.rapidapi.com",
-      },
-    };
     const response = await fetch(
-      `https://trueway-geocoding.p.rapidapi.com/ReverseGeocode?location=${latitude}%20%2C${longitude}&language=en`,
-      options
+      `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${latitude}%2C${longitude}&lang=en-US&apiKey=${process.env.REACT_APP_HERE_API_KEY}`
     );
-    console.log(latitude, longitude);
     const data = await response.json();
-    console.log(data);
-    setAddressGlobal(data?.results?.[0]?.address);
+    console.log("getAddress", data);
+    console.log(data?.items?.[0]?.address?.label);
+    setAddressGlobal(data?.items?.[0]?.address?.label);
   };
 
   //get location code
@@ -105,10 +116,12 @@ const AppLayout = () => {
   }, []);
 
   useEffect(() => {
-    getAddress(
-      locationGlobal?.coordinates?.latitude,
-      locationGlobal?.coordinates?.longitude
-    );
+    if (locationGlobal?.coordinates?.latitude) {
+      getAddress(
+        locationGlobal?.coordinates?.latitude,
+        locationGlobal?.coordinates?.longitude
+      );
+    }
   }, [locationGlobal]);
 
   return (
@@ -168,6 +181,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/cart",
         element: <CartPage />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
       },
     ],
   },

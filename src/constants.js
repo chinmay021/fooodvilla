@@ -32,7 +32,7 @@ export const GMAIL_LINK = "mailto:chinmaykumar021@gmail.com";
 export const LINKEDIN_LINK =
   "https://www.linkedin.com/in/chinmay-kumar-950754144/";
 
-export const HERE_MAP_API_KEY = "mPRL5FAIhx5miqZZYRUSUONrrYI5p1-6kt2oG_lTMx8";
+// export const HERE_MAP_API_KEY = "mPRL5FAIhx5miqZZYRUSUONrrYI5p1-6kt2oG_lTMx8";
 
 /* Mock FAQ */
 export const FAQ = [

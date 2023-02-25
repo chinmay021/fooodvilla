@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { BsCart4 } from "react-icons/bs";
 import { TbCurrentLocation } from "react-icons/tb";
 import useGetAddress from "../utils/useGetAddress";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { HERE_MAP_API_KEY } from "../constants";
 import LocationSideBar from "./LocationSideBar";
 import AddressContext from "../utils/AddressContext";
@@ -27,11 +27,36 @@ const Header = () => {
   const { addressGlobal } = useContext(AddressContext);
   console.log(addressGlobal);
 
+  const locationSideBarRef = useRef(null);
+
+  useEffect(() => {
+    const handleLocationSideBarToggle = (event) => {
+      if (
+        locationSideBarRef.current &&
+        !locationSideBarRef.current.contains(event.target)
+      ) {
+        setToggleLocationBar(false);
+      }
+      // console.log(locationSideBarRef.current);
+    };
+
+    document.body.addEventListener("click", handleLocationSideBarToggle);
+
+    return () => {
+      document.body.removeEventListener("click", handleLocationSideBarToggle);
+    };
+  }, []);
+
   return (
     <div className="flex justify-between items-center  shadow-md z-10">
+      {console.log("header re-render")}
       <div className="flex items-center">
         <Logo />
-        <span className="font-poppins text-xs text-orange-400">{addressGlobal?.length > 50 ? `${addressGlobal?.slice(0,50)}...` : addressGlobal}</span>
+        <span className="font-poppins text-xs text-orange-400">
+          {addressGlobal?.length > 50
+            ? `${addressGlobal?.slice(0, 50)}...`
+            : addressGlobal}
+        </span>
       </div>
       <div>
         <ul className="flex list-none pr-14 font-poppins">
@@ -52,29 +77,34 @@ const Header = () => {
               </span>
             </Link>
           </li>
-          <button
-            onClick={() => {
-              setToggleLocationBar(true);
-            }}
-            className="flex items-center"
-          >
-            <TbCurrentLocation className="text-xl text-orange-400" />
-            <span>location</span>
-          </button>
-          {/* <input
-            className="border ml-3 pl-5"
-            placeholder="enter your location"
-            value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-              if (e.target.value.length > 2) getAutoCompletion(e.target.value);
-            }}
-          /> */}
+          <div ref={locationSideBarRef}>
+            <li className="pt-3 px-3 mr-10">
+              <button
+                onClick={() => {
+                  setToggleLocationBar(true);
+                }}
+                className="flex items-center"
+              >
+                <TbCurrentLocation className="text-xl text-orange-400" />
+                <span>location</span>
+              </button>
+            </li>
+            {/* <input
+              className="border ml-3 pl-5"
+              placeholder="enter your location"
+              value={searchText}
+              onChange={(e) => {
+                setSearchText(e.target.value);
+                if (e.target.value.length > 2) getAutoCompletion(e.target.value);
+              }}
+            /> */}
+
+            <LocationSideBar
+              isVisible={toggleLocationSideBar}
+              setToggle={(param) => setToggleLocationBar(param && true)}
+            />
+          </div>
         </ul>
-        <LocationSideBar
-          isVisible={toggleLocationSideBar}
-          setToggle={(param) => setToggleLocationBar(param && true)}
-        />
       </div>
       {/* <button>login</button> */}
     </div>

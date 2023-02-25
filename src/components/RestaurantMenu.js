@@ -36,7 +36,7 @@ const RestaurantMenu = () => {
         <div className="font-poppins flex gap-10 flex-wrap justify-center bg-[#171a29] text-white my-10 p-10 ">
           <img
             className="w-80 h-52 rounded-sm"
-            src={IMG_CDN_URL + restaurant.cloudinaryImageId}
+            src={IMG_CDN_URL + restaurant?.cloudinaryImageId}
             alt="restaurant dish image"
           />
           <div className="">
