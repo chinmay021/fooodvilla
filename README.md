@@ -2,6 +2,4 @@
 
 Namaste React by Akshay Saini
 
-# Demo
-
-https://fooodvilla.netlify.app/
+# Demo-> https://fooodvilla.netlify.app/
