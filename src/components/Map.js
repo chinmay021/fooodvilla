@@ -3,7 +3,7 @@ import LocationContext from "../utils/LocationContext";
 import AddressContext from "../utils/AddressContext";
 
 const Map = ({ location, address, setToggle }) => {
-  console.log(location, address);
+  // console.log(location, address);
   const [newAddress, setNewAddress] = useState("");
   const [newLocation, setNewLocation] = useState({});
   const { locationGlobal, setLocationGlobal } = useContext(LocationContext);
@@ -59,7 +59,7 @@ const Map = ({ location, address, setToggle }) => {
             at: `${marker.a.lat},${marker.a.lng}`,
           },
           (result) => {
-            console.log(result);
+            // console.log(result);
             setNewAddress(result?.items?.[0]?.address?.label);
             setNewLocation(result?.items?.[0].position);
           }
@@ -115,7 +115,7 @@ const Map = ({ location, address, setToggle }) => {
               pointer.viewportY - target["offset"].y
             )
           );
-          console.log(marker);
+          // console.log(marker);
 
           // Call the reverse geocode method with the geocoding parameters,
           // the callback and an error callback function (called if a
@@ -125,7 +125,7 @@ const Map = ({ location, address, setToggle }) => {
               at: `${marker.a.lat},${marker.a.lng}`,
             },
             (result) => {
-              console.log(result);
+              // console.log(result);
               setNewAddress(result?.items?.[0]?.address?.label);
               setNewLocation(result?.items?.[0].position);
             },
@@ -165,7 +165,7 @@ const Map = ({ location, address, setToggle }) => {
       <button
         className=" bg-slate-900 mt-4 p-2 text-white w-full"
         onClick={() => {
-          console.log(newLocation);
+          // console.log(newLocation);
           setLocationGlobal({
             loaded: true,
             coordinates: {

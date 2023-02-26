@@ -25,7 +25,7 @@ const Header = () => {
   // const [address,setAddress] = useState(useGetAddress());
   // const address = useGetAddress();
   const { addressGlobal } = useContext(AddressContext);
-  console.log(addressGlobal);
+  // console.log(addressGlobal);
 
   const locationSideBarRef = useRef(null);
 
@@ -49,7 +49,7 @@ const Header = () => {
 
   return (
     <div className="flex justify-between items-center  shadow-md z-10">
-      {console.log("header re-render")}
+      {/* {console.log("header re-render")} */}
       <div className="flex items-center">
         <Logo />
         <span className="font-poppins text-xs text-orange-400">

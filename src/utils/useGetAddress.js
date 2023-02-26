@@ -5,7 +5,7 @@ const useGetAddress = () => {
   const [address, setAddress] = useState("");
   // console.log(location);
   const location = useContext(LocationContext);
-  console.log(location?.coordinates?.latitude, location?.coordinates?.longitude);
+  // console.log(location?.coordinates?.latitude, location?.coordinates?.longitude);
 
   const getAddress = async (latitude, longitude) => {
     // console.log("get address api called");
@@ -20,7 +20,7 @@ const useGetAddress = () => {
       `https://trueway-geocoding.p.rapidapi.com/ReverseGeocode?location=${latitude}%20%2C${longitude}&language=en`,
       options
     );
-    console.log("useAddress->",latitude, longitude);
+    // console.log("useAddress->",latitude, longitude);
     const data = await response.json();
     setAddress(data?.results?.[0]?.address);
   };

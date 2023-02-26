@@ -74,8 +74,8 @@ const AppLayout = () => {
       `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${latitude}%2C${longitude}&lang=en-US&apiKey=${process.env.REACT_APP_HERE_API_KEY}`
     );
     const data = await response.json();
-    console.log("getAddress", data);
-    console.log(data?.items?.[0]?.address?.label);
+    // console.log("getAddress", data);
+    // console.log(data?.items?.[0]?.address?.label);
     setAddressGlobal(data?.items?.[0]?.address?.label);
   };
 
@@ -128,7 +128,7 @@ const AppLayout = () => {
 
   return (
     <Provider store={store}>
-      {console.log("rendered app")}
+      {/* {console.log("rendered app")} */}
       <div
         className={`m-auto w-fit min-w-[80vw] min-h-screen flex flex-col box-border border`}
       >

@@ -22,7 +22,7 @@ const SuggestionDropDown = ({
       `https://geocode.search.hereapi.com/v1/geocode?q=${searchParam}&apiKey=${process.env.REACT_APP_HERE_API_KEY}`
     );
     const data = await response.json();
-    console.log(data?.items?.[0]);
+    // console.log(data?.items?.[0]);
     // setLocationGlobal({
     //   loaded: true,
     //   coordinates: {
@@ -38,7 +38,7 @@ const SuggestionDropDown = ({
 
   return (
     <div className="w-full font-poppins ">
-      {console.log("suggesiton re-render")}
+      {/* {console.log("suggesiton re-render")} */}
       {searchText && !loading && (
         <div>
           <div className="" id="suggestion">

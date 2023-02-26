@@ -26,7 +26,7 @@ const Checkout = () => {
     dispatch(clearCart());
     navigate(`/success/${token?.created}`);
 
-    console.log(token);
+    // console.log(token);
   };
   return (
     <div className="flex-grow bg-slate-50">

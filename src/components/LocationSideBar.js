@@ -10,12 +10,12 @@ const LocationSideBar = ({ isVisible, setToggle }) => {
   const [loading, setLoading] = useState(true);
   const [mapToggle, setMapToggle] = useState(false);
   const getAutoCompletion = async (text) => {
-    console.log(text);
+    // console.log(text);
     const suggestions = await fetch(
       `https://autocomplete.search.hereapi.com/v1/autocomplete?q=${text}&apiKey=${process.env.REACT_APP_HERE_API_KEY}&in=countryCode%3AIND`
     );
     const data = await suggestions.json();
-    console.log(data);
+    // console.log(data);
     setSuggestions(data?.items);
     setLoading(false);
   };
@@ -25,7 +25,7 @@ const LocationSideBar = ({ isVisible, setToggle }) => {
         isVisible ? "translate-x-0 " : "translate-x-full"
       } ease-in-out duration-300`}
     >
-      {console.log("locationsidebar re-render")}
+      {/* {console.log("locationsidebar re-render")} */}
       <button
         className="w-full  p-7 flex  flex-col items-end"
         onClick={() => setToggle(false)}
@@ -39,7 +39,7 @@ const LocationSideBar = ({ isVisible, setToggle }) => {
         onChange={(e) => {
           setSearchText(e.target.value);
           setLoading(true);
-          console.log(searchText);
+          // console.log(searchText);
           if (e.target.value.length > 2) getAutoCompletion(e.target.value);
         }}
       />

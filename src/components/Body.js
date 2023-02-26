@@ -20,17 +20,17 @@ const Body = () => {
 
   const { locationGlobal } = useContext(LocationContext);
   const latitude = locationGlobal?.coordinates?.latitude;
-  console.log("latitude: " + latitude);
+  // console.log("latitude: " + latitude);
   const longitude = locationGlobal?.coordinates?.longitude;
   // console.log(location.coordinates.latitude, location.coordinates.longitude);
 
   async function getRestaurants(url) {
     try {
-      console.log(url, latitude, longitude);
+      // console.log(url, latitude, longitude);
       //lat=22.814794130574803&lng=86.09871324151756
       const data = await fetch(`${url}lat=${latitude}&lng=${longitude}`);
       const json = await data.json();
-      console.log(json.data.cards);
+      // console.log(json.data.cards);
       if (url === API_URL) {
         if (json?.data?.cards?.length === 1) {
           setAllRestaurants(json?.data?.cards?.[0].data?.data?.cards);
@@ -76,7 +76,7 @@ const Body = () => {
   };
 
   useEffect(() => {
-    console.log("useEffect called latitude", latitude);
+    // console.log("useEffect called latitude", latitude);
     if (latitude && longitude) {
       // offset ? getRestaurants(API_URL3) : getRestaurants();
       getRestaurants(API_URL);
@@ -87,7 +87,7 @@ const Body = () => {
   }, [latitude, longitude]);
 
   useEffect(() => {
-    console.log("useEffect called offset", offset, latitude);
+    // console.log("useEffect called offset", offset, latitude);
     if (offset) {
       getRestaurants(`${API_URL3}offset=${offset}&`);
     }
