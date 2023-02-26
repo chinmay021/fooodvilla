@@ -1,14 +1,17 @@
 import { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AddressContext from "../utils/AddressContext";
 import Cart from "./Cart";
-import { CiDiscount1 } from "react-icons/ci";
+import { TbDiscount2 } from "react-icons/tb";
 import StripeCheckout from "react-stripe-checkout";
+import { clearCart } from "../utils/cartSlice";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((store) => store.cart.items);
+
+  const navigate = useNavigate();
 
   const { addressGlobal } = useContext(AddressContext);
 
@@ -19,7 +22,12 @@ const Checkout = () => {
     );
     return total;
   };
+  const tokenReciever = (token) => {
+    dispatch(clearCart());
+    navigate(`/success/${token?.created}`);
 
+    console.log(token);
+  };
   return (
     <div className="flex-grow bg-slate-50">
       {!cartItems.length ? (
@@ -67,7 +75,7 @@ const Checkout = () => {
                   panelLabel="Pay" // prepended to the amount in the bottom pay button
                   amount={getTotal() + 6000 + 6095} // paise
                   currency="INR"
-                  token="Token"
+                  token={tokenReciever}
                   stripeKey="pk_test_51MffvlSAmyxEsHY9a0ZsER0nsSKM63lOF7MPdRZFd1Ke0iw6jaFRgV6wES7CyLdxKGYMFoTtF5e50opKRDpQAsFr00JukSmWXU"
                 />
               </div>
@@ -94,7 +102,7 @@ const Checkout = () => {
                     </div>
                   </div>
                   <button className="border-2 flex items-center border-dashed text-sm p-4 gap-5">
-                    <CiDiscount1 className="text-xl" />
+                    <TbDiscount2 className="text-xl" />
                     <span>Apply Coupon</span>
                   </button>
                   <div className="text-xs">

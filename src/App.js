@@ -22,6 +22,7 @@ import useGetLocation from "./utils/useGetLocation";
 import AddressContext from "./utils/AddressContext";
 import useGetAddress from "./utils/useGetAddress";
 import Checkout from "./components/Checkout";
+import Success from "./components/Success";
 
 // App Layout
 /**
@@ -43,7 +44,6 @@ import Checkout from "./components/Checkout";
  */
 
 const About = lazy(() => import("./components/About"));
-
 
 const AppLayout = () => {
   const [locationGlobal, setLocationGlobal] = useState(null);
@@ -187,6 +187,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout />,
+      },
+      {
+        path: "/success/:orderId",
+        element: <Success />,
       },
     ],
   },
