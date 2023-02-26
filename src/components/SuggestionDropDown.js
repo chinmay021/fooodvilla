@@ -1,5 +1,5 @@
 import { TfiLocationPin } from "react-icons/tfi";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, lazy } from "react";
 import AddressContext from "../utils/AddressContext";
 import LocationContext from "../utils/LocationContext";
 import Map from "./Map";

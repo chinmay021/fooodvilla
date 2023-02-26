@@ -8,6 +8,7 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { HERE_MAP_API_KEY } from "../constants";
 import LocationSideBar from "./LocationSideBar";
 import AddressContext from "../utils/AddressContext";
+import useClickOutside from "../utils/useClickOutside";
 
 const Logo = () => {
   return (
@@ -19,33 +20,9 @@ const Logo = () => {
 
 const Header = () => {
   const [toggleLocationSideBar, setToggleLocationBar] = useState(false);
-  // const cartItems = useSelector(store => store.cart.items);
   const cartTotalCount = useSelector((store) => store.cart.totalItemCount);
-
-  // const [address,setAddress] = useState(useGetAddress());
-  // const address = useGetAddress();
   const { addressGlobal } = useContext(AddressContext);
-  // console.log(addressGlobal);
-
-  const locationSideBarRef = useRef(null);
-
-  useEffect(() => {
-    const handleLocationSideBarToggle = (event) => {
-      if (
-        locationSideBarRef.current &&
-        !locationSideBarRef.current.contains(event.target)
-      ) {
-        setToggleLocationBar(false);
-      }
-      // console.log(locationSideBarRef.current);
-    };
-
-    document.body.addEventListener("click", handleLocationSideBarToggle);
-
-    return () => {
-      document.body.removeEventListener("click", handleLocationSideBarToggle);
-    };
-  }, []);
+  const locationSideBarRef = useClickOutside(() => setToggleLocationBar(false));
 
   return (
     <div className="flex justify-between items-center  shadow-md z-10">

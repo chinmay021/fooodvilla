@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { HERE_MAP_API_KEY } from "../constants";
-import SuggestionDropDown from "./SuggestionDropDown";
+// import SuggestionDropDown from "./SuggestionDropDown";
 import { GrFormClose } from "react-icons/gr";
-import Map from "./Map";
+
+const SuggestionDropDown = lazy(() => import("./SuggestionDropDown"));
 
 const LocationSideBar = ({ isVisible, setToggle }) => {
   const [searchText, setSearchText] = useState("");
@@ -21,7 +22,7 @@ const LocationSideBar = ({ isVisible, setToggle }) => {
   };
   return (
     <div
-      className={`h-screen w-[40vw] min-w-fit border-2 bg-white fixed top-0 right-0 flex flex-col p-2 ${
+      className={`overflow-auto h-screen w-[40vw] min-w-[300px] border-2 bg-white fixed top-0 right-0 flex flex-col p-2 ${
         isVisible ? "translate-x-0 " : "translate-x-full"
       } ease-in-out duration-300`}
     >
@@ -43,13 +44,17 @@ const LocationSideBar = ({ isVisible, setToggle }) => {
           if (e.target.value.length > 2) getAutoCompletion(e.target.value);
         }}
       />
-      <SuggestionDropDown
-        suggestions={suggestions}
-        searchText={searchText}
-        setSearchText={setSearchText}
-        loading={loading}
-        setToggle={setToggle}
-      />
+      {!loading && (
+        <Suspense>
+          <SuggestionDropDown
+            suggestions={suggestions}
+            searchText={searchText}
+            setSearchText={setSearchText}
+            loading={loading}
+            setToggle={setToggle}
+          />
+        </Suspense>
+      )}
     </div>
   );
 };

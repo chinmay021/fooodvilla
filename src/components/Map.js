@@ -2,12 +2,36 @@ import { useRef, useState, useLayoutEffect, useContext } from "react";
 import LocationContext from "../utils/LocationContext";
 import AddressContext from "../utils/AddressContext";
 
+// console.log("maps");
+
+// function loadScript(url) {
+//   const script = document.createElement("script");
+//   script.type = "text/javascript";
+//   script.src = url;
+//   script.charset = "utf-8";
+//   document.body.prepend(script);
+// }
+
+// function loadLink(url) {
+//   const link = document.createElement("link");
+//   link.rel = "stylesheet";
+//   link.type = "text/css";
+//   link.href = url;
+//   document.body.prepend(link);
+// }
+// loadScript("https://js.api.here.com/v3/3.1/mapsjs-core.js");
+// loadScript("https://js.api.here.com/v3/3.1/mapsjs-service.js");
+// loadScript("https://js.api.here.com/v3/3.1/mapsjs-mapevents.js");
+// loadScript("https://js.api.here.com/v3/3.1/mapsjs-ui.js");
+// loadLink("https://js.api.here.com/v3/3.1/mapsjs-ui.css");
+
 const Map = ({ location, address, setToggle }) => {
   // console.log(location, address);
   const [newAddress, setNewAddress] = useState("");
   const [newLocation, setNewLocation] = useState({});
   const { locationGlobal, setLocationGlobal } = useContext(LocationContext);
   const { addressGlobal, setAddressGlobal } = useContext(AddressContext);
+
   // Create a reference to the HTML element we want to put the map on
   const mapRef = useRef(null);
 
