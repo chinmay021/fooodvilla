@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { IMG__MENU_ITEM_CDN_URL } from "../constants";
 import { addItem, decreamentItem, clearCart } from "../utils/cartSlice";
 
@@ -30,6 +30,8 @@ const Cart = () => {
   const handleClearCart = () => {
     disptach(clearCart());
   };
+
+  const url = useLocation();
 
   return (
     <div
@@ -81,11 +83,13 @@ const Cart = () => {
         <span>Total</span>
         <span>&#8377;{(getTotal() + 0.0) / 100}</span>
       </div>
-      <Link to={"/checkout"}>
-        <button className="font-poppins bg-slate-900 mt-4 p-2 text-white w-full">
-          Checkout
-        </button>
-      </Link>
+      {url.pathname !== "/checkout" && (
+        <Link to={"/checkout"}>
+          <button className="font-poppins bg-slate-900 mt-4 p-2 text-white w-full">
+            Checkout
+          </button>
+        </Link>
+      )}
     </div>
   );
 };

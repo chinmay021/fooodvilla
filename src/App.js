@@ -43,6 +43,8 @@ import Checkout from "./components/Checkout";
  */
 
 const About = lazy(() => import("./components/About"));
+
+
 const AppLayout = () => {
   const [locationGlobal, setLocationGlobal] = useState(null);
   const [addressGlobal, setAddressGlobal] = useState(null);

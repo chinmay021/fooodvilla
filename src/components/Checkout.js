@@ -3,12 +3,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import AddressContext from "../utils/AddressContext";
 import Cart from "./Cart";
+import { CiDiscount1 } from "react-icons/ci";
+import StripeCheckout from "react-stripe-checkout";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((store) => store.cart.items);
 
   const { addressGlobal } = useContext(AddressContext);
+
+  const getTotal = () => {
+    const total = cartItems.reduce(
+      (sum, current) => sum + current.price * current.quantity,
+      0.0
+    );
+    return total;
+  };
 
   return (
     <div className="flex-grow bg-slate-50">
@@ -35,42 +45,88 @@ const Checkout = () => {
           </div>
         </div>
       ) : (
-        <div></div>
-      )}
-      <div className="flex w-full font-poppins h-full border ">
-        <div className="left flex-grow flex-auto w-2/3 flex flex-col  ml-16 mt-8 ">
-          <div className="address bg-white mb-8 p-10">
-            <p className="font-bold text-lg mb-4">Delivery address</p>
+        <>
+          <div className="flex  w-full font-poppins h-full border overflow-x-auto ">
+            <div className="left flex-grow flex-auto w-[50%] min-w-[50%] flex flex-col  ml-16 mt-8 ">
+              <div className="address bg-white mb-8 p-10">
+                <p className="font-bold text-lg mb-4">Delivery address</p>
 
-            <p className="text-sm"> {addressGlobal}</p>
-          </div>
-          <div className="payment bg-white p-10 flex-grow mb-8">
-            <p className="font-bold text-lg">Choose payment method</p>
-          </div>
-        </div>
-        <div className="right flex flex-col w-fit max-h-[100vh] overflow-x-auto bg-white m-8 py-4 px-6">
-          <Cart />
-          <div className="mx-8 flex flex-col gap-6">
-            <input
-              className="bg-slate-100 w-full focus:outline-none p-4 text-xs"
-              placeholder="Any suggestions? We will pass it on..."
-            ></input>
-            <div className="border flex w-full text-sm gap-4 p-2">
-              <input type="checkbox" className="mx-4" />
-              <p>
-                <span className="font-bold block">
-                  Opt in for No-contact Delivery
-                </span>
-                <span className="max-w-fit text-xs">
-                  Unwell, or avoiding contact? Please select no-contact
-                  delivery. Partner will safely place the order outside your
-                  door (not for COD)
-                </span>
-              </p>
+                <p className="text-sm"> {addressGlobal}</p>
+              </div>
+              <div className="flex gap-8 flex-col bg-white p-10 mb-8">
+                <p className="font-bold text-lg">Choose payment method</p>
+                {/* <button className="font-poppins bg-slate-900 mt-4 p-2 text-white w-full">
+                  Pay Now
+                </button> */}
+                <p className="text-slate-400">
+                  For dummy payment enter card number as 4242 4242 4242 4242
+                </p>
+                <StripeCheckout
+                  name="Payment Details" // the pop-in header title
+                  ComponentClass="div"
+                  panelLabel="Pay" // prepended to the amount in the bottom pay button
+                  amount={getTotal() + 6000 + 6095} // paise
+                  currency="INR"
+                  token="Token"
+                  stripeKey="pk_test_51MffvlSAmyxEsHY9a0ZsER0nsSKM63lOF7MPdRZFd1Ke0iw6jaFRgV6wES7CyLdxKGYMFoTtF5e50opKRDpQAsFr00JukSmWXU"
+                />
+              </div>
+            </div>
+            <div className="right flex flex-col max-h-[100vh] w-fit box-border bg-white m-8 py-4 px-6">
+              <div className="overflow-y-auto max-h-[calc(100vh-270px)]">
+                <Cart />
+                <div className="flex flex-col gap-5 max-w-[582px] min-w-[460px] px-5">
+                  <input
+                    className="bg-slate-100 w-full focus:outline-none p-4 text-xs"
+                    placeholder="Any suggestions? We will pass it on..."
+                  ></input>
+                  <div className="border flex  text-sm gap-4 p-2">
+                    <input type="checkbox" className="mx-4" />
+                    <div>
+                      <span className="font-bold block">
+                        Opt in for No-contact Delivery
+                      </span>
+                      <span className=" text-xs text-slate-500">
+                        Unwell, or avoiding contact? Please select no-contact
+                        delivery. Partner will safely place the order outside
+                        your door (not for COD)
+                      </span>
+                    </div>
+                  </div>
+                  <button className="border-2 flex items-center border-dashed text-sm p-4 gap-5">
+                    <CiDiscount1 className="text-xl" />
+                    <span>Apply Coupon</span>
+                  </button>
+                  <div className="text-xs">
+                    <span className="block font-bold mb-3 border-b py-4">
+                      Bill Detials
+                    </span>
+                    <div className="flex justify-between mb-1">
+                      <span>Item Total</span>
+                      <span>
+                        &#8377;{" "}
+                        <span id="cart-total">{(getTotal() + 0.0) / 100}</span>
+                      </span>
+                    </div>
+                    <div className="flex justify-between mb-1 border-b py-4">
+                      <span>Delivery partner fee</span>
+                      <span>&#8377; 62</span>
+                    </div>
+                    <div className="flex justify-between mb-1  py-4 ">
+                      <span>Govt Taxes & Other Charges</span>
+                      <span>&#8377; 60.95</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-between mb-1 py-4 font-bold border-t-4 border-black">
+                <span>TO PAY</span>
+                <span>&#8377; {(getTotal() + 0.0) / 100 + 60 + 60.95}</span>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

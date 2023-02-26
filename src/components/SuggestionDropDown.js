@@ -76,8 +76,9 @@ const SuggestionDropDown = ({
               );
             })}
           </div>
-          { document.getElementById("suggestion")?.style?.display ===
-                      "none" && <Map location={location} address={address} setToggle={setToggle} />}
+          {document.getElementById("suggestion")?.style?.display === "none" && (
+            <Map location={location} address={address} setToggle={setToggle} />
+          )}
         </div>
       )}
     </div>
