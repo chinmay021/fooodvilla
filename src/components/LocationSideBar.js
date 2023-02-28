@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from "react";
+import { useState, lazy, Suspense , useCallback} from "react";
 import { HERE_MAP_API_KEY } from "../constants";
 // import SuggestionDropDown from "./SuggestionDropDown";
 import { GrFormClose } from "react-icons/gr";
@@ -10,23 +10,34 @@ const LocationSideBar = ({ isVisible, setToggle }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mapToggle, setMapToggle] = useState(false);
+
   const getAutoCompletion = async (text) => {
-    // console.log(text);
+    
+    console.log(text);
     const suggestions = await fetch(
       `https://autocomplete.search.hereapi.com/v1/autocomplete?q=${text}&apiKey=${process.env.REACT_APP_HERE_API_KEY}&in=countryCode%3AIND`
     );
     const data = await suggestions.json();
-    // console.log(data);
     setSuggestions(data?.items);
     setLoading(false);
   };
+
+  const debounce = (callback, delay) => {
+    let timer;
+    return function (...args) {
+      clearTimeout(timer);
+      let context = this;
+      timer = setTimeout(() => callback.apply(context,args), delay);
+    };
+  };
+  const debounceSuggestion = useCallback(debounce(getAutoCompletion, 300),[]);
+
   return (
     <div
       className={`overflow-auto h-screen w-[40vw] min-w-[300px] border-2 bg-white fixed top-0 right-0 flex flex-col p-2 ${
         isVisible ? "translate-x-0 " : "translate-x-full"
       } ease-in-out duration-300`}
     >
-      {/* {console.log("locationsidebar re-render")} */}
       <button
         className="w-full  p-7 flex  flex-col items-end"
         onClick={() => setToggle(false)}
@@ -40,8 +51,7 @@ const LocationSideBar = ({ isVisible, setToggle }) => {
         onChange={(e) => {
           setSearchText(e.target.value);
           setLoading(true);
-          // console.log(searchText);
-          if (e.target.value.length > 2) getAutoCompletion(e.target.value);
+          if (e.target.value.length > 2) debounceSuggestion(e.target.value);
         }}
       />
       {!loading && (

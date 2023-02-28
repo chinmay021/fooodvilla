@@ -33,13 +33,14 @@ const Body = () => {
       // console.log(json.data.cards);
       if (url === API_URL) {
         json?.data?.cards.forEach((card) => {
-          console.log(card);
+          // console.log(card);
           if (card.cardType === "seeAllRestaurants") {
-            console.log(card);
+            // console.log(card);
             setAllRestaurants(card?.data?.data?.cards);
             setfilteredRestaurants(card?.data?.data?.cards);
             totalOpenRestaurants.current =
               card?.data?.data?.totalOpenRestaurants;
+            return;
           }
         });
       } else {
