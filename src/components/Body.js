@@ -32,17 +32,16 @@ const Body = () => {
       const json = await data.json();
       // console.log(json.data.cards);
       if (url === API_URL) {
-        if (json?.data?.cards?.length === 1) {
-          setAllRestaurants(json?.data?.cards?.[0].data?.data?.cards);
-          setfilteredRestaurants(json?.data?.cards?.[0]?.data?.data?.cards);
-          totalOpenRestaurants.current =
-            json?.data?.cards?.[0]?.data?.data.totalOpenRestaurants;
-        } else {
-          setAllRestaurants(json?.data?.cards?.[2].data?.data?.cards);
-          setfilteredRestaurants(json?.data?.cards?.[2]?.data?.data?.cards);
-          totalOpenRestaurants.current =
-            json?.data?.cards?.[2]?.data?.data.totalOpenRestaurants;
-        }
+        json?.data?.cards.forEach((card) => {
+          console.log(card);
+          if (card.cardType === "seeAllRestaurants") {
+            console.log(card);
+            setAllRestaurants(card?.data?.data?.cards);
+            setfilteredRestaurants(card?.data?.data?.cards);
+            totalOpenRestaurants.current =
+              card?.data?.data?.totalOpenRestaurants;
+          }
+        });
       } else {
         const arr = json?.data?.cards;
         const restaurantList = arr.map((item) => {
