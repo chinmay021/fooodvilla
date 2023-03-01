@@ -1,7 +1,7 @@
-import { useState, lazy, Suspense , useCallback} from "react";
-import { HERE_MAP_API_KEY } from "../constants";
+import { useState, lazy, Suspense, useCallback, useEffect } from "react";
 // import SuggestionDropDown from "./SuggestionDropDown";
 import { GrFormClose } from "react-icons/gr";
+import useDebounce from "../utils/useDebounce";
 
 const SuggestionDropDown = lazy(() => import("./SuggestionDropDown"));
 
@@ -9,11 +9,9 @@ const LocationSideBar = ({ isVisible, setToggle }) => {
   const [searchText, setSearchText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [mapToggle, setMapToggle] = useState(false);
 
   const getAutoCompletion = async (text) => {
-    
-    console.log(text);
+    console.log("text", text);
     const suggestions = await fetch(
       `https://autocomplete.search.hereapi.com/v1/autocomplete?q=${text}&apiKey=${process.env.REACT_APP_HERE_API_KEY}&in=countryCode%3AIND`
     );
@@ -22,15 +20,23 @@ const LocationSideBar = ({ isVisible, setToggle }) => {
     setLoading(false);
   };
 
-  const debounce = (callback, delay) => {
-    let timer;
-    return function (...args) {
-      clearTimeout(timer);
-      let context = this;
-      timer = setTimeout(() => callback.apply(context,args), delay);
-    };
-  };
-  const debounceSuggestion = useCallback(debounce(getAutoCompletion, 300),[]);
+  // const debounce = (callback, delay) => {
+  //   let timer;
+  //   console.log("clled");
+  //   return function (...args) {
+  //     console.log("inside");
+  //     clearTimeout(timer);
+  //     let context = this;
+  //     timer = setTimeout(() => callback.apply(context, args), delay);
+  //   };
+  // };
+  // const debounceSuggestion = useCallback(debounce(getAutoCompletion, 300), []);
+
+  const debounceSearchText = useDebounce(searchText, 200);
+
+  useEffect(() => {
+    debounceSearchText?.length > 2 && getAutoCompletion(debounceSearchText);
+  }, [debounceSearchText]);
 
   return (
     <div
@@ -51,7 +57,7 @@ const LocationSideBar = ({ isVisible, setToggle }) => {
         onChange={(e) => {
           setSearchText(e.target.value);
           setLoading(true);
-          if (e.target.value.length > 2) debounceSuggestion(e.target.value);
+          // if (e.target.value.length > 2) debounceSuggestion(e.target.value);
         }}
       />
       {!loading && (

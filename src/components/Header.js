@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { BsCart4 } from "react-icons/bs";
 import { TbCurrentLocation } from "react-icons/tb";
-import useGetAddress from "../utils/useGetAddress";
 import { useContext, useState, useEffect, useRef } from "react";
-import { HERE_MAP_API_KEY } from "../constants";
 import LocationSideBar from "./LocationSideBar";
 import AddressContext from "../utils/AddressContext";
 import useClickOutside from "../utils/useClickOutside";
@@ -76,10 +74,12 @@ const Header = () => {
               }}
             /> */}
 
-            <LocationSideBar
-              isVisible={toggleLocationSideBar}
-              setToggle={(param) => setToggleLocationBar(param && true)}
-            />
+            {toggleLocationSideBar && (
+              <LocationSideBar
+                isVisible={toggleLocationSideBar}
+                setToggle={(param) => setToggleLocationBar(param && true)}
+              />
+            )}
           </div>
         </ul>
       </div>
