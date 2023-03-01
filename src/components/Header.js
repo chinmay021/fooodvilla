@@ -11,7 +11,7 @@ import useClickOutside from "../utils/useClickOutside";
 const Logo = () => {
   return (
     <a href="/">
-      <img className="w-24 p-2" src={logo} alt="logo"></img>
+      <img data-testid="logo" className="w-24 p-2" src={logo} alt="logo"></img>
     </a>
   );
 };
@@ -48,7 +48,11 @@ const Header = () => {
             <Link to="/cart" className="flex gap-1 items-center">
               <BsCart4 className="inline text-2xl text-orange-400" />
               <span className=" font-bold text-orange-400 p-[1px]">
-                {cartTotalCount ? <div>{cartTotalCount}</div> : ""}
+                {cartTotalCount ? (
+                  <div data-testid="cart">{cartTotalCount}</div>
+                ) : (
+                  ""
+                )}
               </span>
             </Link>
           </li>

@@ -57,3 +57,5 @@ Thumbs.db
 
 
 .env
+
+/coverage

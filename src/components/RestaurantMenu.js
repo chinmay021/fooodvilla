@@ -72,7 +72,7 @@ const RestaurantMenu = () => {
         </div>
         <div className="flex ">
           <div className="bg-white w-2/3 m-auto font-poppins flex p-3 justify-center">
-            <div className="w-full">
+            <div className="w-full" data-testid="menu">
               {Object.values(restaurant?.menu?.items).map((item) => {
                 return (
                   <div
@@ -102,7 +102,10 @@ const RestaurantMenu = () => {
                           -
                         </button>
                         <span>{getItemCount(item)}</span>
-                        <button onClick={() => handleAddFoodItem(item)}>
+                        <button
+                          data-testid="addBtn"
+                          onClick={() => handleAddFoodItem(item)}
+                        >
                           +
                         </button>
                       </div>
