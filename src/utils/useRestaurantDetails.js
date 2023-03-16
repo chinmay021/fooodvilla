@@ -11,7 +11,7 @@ const useRestaurantDetails = (resId) => {
       const json = await data.json();
       setRestaurant(json.data);
     } catch (err) {
-      console.log("There was an error", error);
+      console.log("There was an error", err);
     }
   }
   useEffect(() => {
