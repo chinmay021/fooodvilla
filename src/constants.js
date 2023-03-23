@@ -1,6 +1,7 @@
 const CORS_PROXY_URL = "/api/";
 
 
+
 export const IMG_CDN_URL =
   "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
 
@@ -24,6 +25,16 @@ export const API_URL2 =
 
 export const FETCH_MENU_URL =
   CORS_PROXY_URL + "dapi/menu/v4/full?lat=20.351841&lng=85.805154&menuId=";
+
+
+
+  export const API_URL1 = "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.8466937&lng=80.94616599999999&page_type=DESKTOP_WEB_LISTING";
+//Fetching menu
+export const FETCH_MENU_URL1 =  "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=26.8466937&lng=80.94616599999999&restaurantId=" ;
+export const MENU_ITEM_TYPE_KEY = "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory";
+export const RESTAURANT_TYPE_KEY = "type.googleapis.com/swiggy.presentation.food.v2.Restaurant";
+
+
 
 export const GITHUB_LINK = "https://github.com/chinmay021";
 
