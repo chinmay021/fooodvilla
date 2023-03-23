@@ -142,7 +142,7 @@ const RestaurantMenu = () => {
                       alt={item?.name}
                     />
                     <div className="flex justify-between font-poppins w-20 border bg-slate-50 text-black py-[2px] px-2 cursor-pointer ">
-                      <button onClick={() => handleDecFoodItem(item)}>
+                      <button onClick={() => handleDecreamentFoodItem(item)}>
                         {" "}
                         -{" "}
                       </button>

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { IMG__MENU_ITEM_CDN_URL } from "../constants";
+import { IMG_CDN_URL, IMG__MENU_ITEM_CDN_URL } from "../constants";
 import { addItem, decreamentItem, clearCart } from "../utils/cartSlice";
 
 const Cart = () => {
@@ -60,7 +60,7 @@ const Cart = () => {
             >
               <img
                 className="w-12"
-                src={IMG__MENU_ITEM_CDN_URL + item?.cloudinaryImageId}
+                src={IMG_CDN_URL + item?.imageId}
                 alt=""
                 onError={(event) => (event.target.style.display = "block")}
               />
