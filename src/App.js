@@ -2,8 +2,6 @@ import React, {
   lazy,
   Suspense,
   useState,
-  useMemo,
-  useRef,
   useEffect,
 } from "react";
 import ReactDOM from "react-dom/client";
@@ -130,7 +128,7 @@ const AppLayout = () => {
     <Provider store={store}>
       {/* {console.log("rendered app")} */}
       <div
-        className={`m-auto w-fit min-w-[80vw] min-h-screen flex flex-col box-border border`}
+        className={`m-auto w-[80vw] min-w-[80vw] min-h-screen flex flex-col box-border border`}
       >
         <AddressContext.Provider
           value={{

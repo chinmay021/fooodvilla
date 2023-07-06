@@ -23,7 +23,7 @@ const Header = () => {
   const locationSideBarRef = useClickOutside(() => setToggleLocationBar(false));
 
   return (
-    <div className="flex justify-between items-center  shadow-md z-10">
+    <div className="flex justify-between items-center  shadow-md z-10 w-full">
       {/* {console.log("header re-render")} */}
       <div className="flex items-center">
         <Logo />
