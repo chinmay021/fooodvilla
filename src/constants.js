@@ -13,7 +13,10 @@ export const API_URL4 =
 
 export const API_URL3 =
   CORS_PROXY_URL +
-  "/dapi/restaurants/list/v5?sortBy=RELEVANCE&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING&";
+  "/dapi/restaurants/list/v5?pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING&";
+// export const API_URL3 =
+//   CORS_PROXY_URL +
+//   "/dapi/restaurants/list/v5?sortBy=RELEVANCE&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING&";
 
 export const API_URL =
   CORS_PROXY_URL + "/dapi/restaurants/list/v5?page_type=DESKTOP_WEB_LISTING&";

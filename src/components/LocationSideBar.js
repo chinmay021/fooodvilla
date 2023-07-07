@@ -39,38 +39,40 @@ const LocationSideBar = ({ isVisible, setToggle }) => {
   }, [debounceSearchText]);
 
   return (
-    <div
-      className={`overflow-auto h-screen w-[40vw] min-w-[300px] border-2 bg-white fixed top-0 right-0 flex flex-col p-2 ${
-        isVisible ? "translate-x-0 " : "translate-x-full"
-      } ease-in-out duration-300`}
-    >
-      <button
-        className="w-full  p-7 flex  flex-col items-end"
-        onClick={() => setToggle(false)}
+    <div className="w-full h-full bg-black/40 absolute top-0 left-0">
+      <div
+        className={`overflow-auto h-screen w-[40vw] min-w-[300px] border-2 bg-white fixed top-0 right-0 flex flex-col p-2 ${
+          isVisible ? "translate-x-0" : "translate-x-full"
+        }  transition-all duration-300 z-10`}
       >
-        <GrFormClose className=" text-3xl" />
-      </button>
-      <input
-        className="border p-4 focus:outline-none shadow-sm"
-        placeholder="Change Location..."
-        value={searchText}
-        onChange={(e) => {
-          setSearchText(e.target.value);
-          setLoading(true);
-          // if (e.target.value.length > 2) debounceSuggestion(e.target.value);
-        }}
-      />
-      {!loading && (
-        <Suspense>
-          <SuggestionDropDown
-            suggestions={suggestions}
-            searchText={searchText}
-            setSearchText={setSearchText}
-            loading={loading}
-            setToggle={setToggle}
-          />
-        </Suspense>
-      )}
+        <button
+          className="w-fit  p-7 flex  flex-col items-end"
+          onClick={() => setToggle(false)}
+        >
+          <GrFormClose className=" text-3xl" />
+        </button>
+        <input
+          className="border p-4 focus:outline-none shadow-sm"
+          placeholder="Change Location..."
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+            setLoading(true);
+            // if (e.target.value.length > 2) debounceSuggestion(e.target.value);
+          }}
+        />
+        {!loading && (
+          <Suspense>
+            <SuggestionDropDown
+              suggestions={suggestions}
+              searchText={searchText}
+              setSearchText={setSearchText}
+              loading={loading}
+              setToggle={setToggle}
+            />
+          </Suspense>
+        )}
+      </div>
     </div>
   );
 };

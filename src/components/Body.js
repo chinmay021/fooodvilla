@@ -17,6 +17,9 @@ const Body = () => {
   const [offset, setOffset] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const totalOpenRestaurants = useRef(0);
+  const [totalRestaurants, setTotalRestaurants] = useState(0);
+  const [filter, setFilter] = useState("RELEVANCE");
+  const [searching, setSearching] = useState(false);
 
   // const location = useGetAddress();
   // console.log(location);
@@ -33,19 +36,34 @@ const Body = () => {
       //lat=22.814794130574803&lng=86.09871324151756
       const data = await fetch(`${url}lat=${latitude}&lng=${longitude}`);
       const json = await data.json();
+
       // console.log(json.data.cards);
-      if (url === API_URL) {
-        json?.data?.cards.forEach((card) => {
-          // console.log(card);
-          if (card.cardType === "seeAllRestaurants") {
+      if (url === API_URL || offset === 0) {
+        
+        if (url === API_URL) {
+          console.log("zzzzz");
+          json?.data?.cards.forEach((card) => {
             // console.log(card);
-            setAllRestaurants(card?.data?.data?.cards);
-            setfilteredRestaurants(card?.data?.data?.cards);
-            totalOpenRestaurants.current =
-              card?.data?.data?.totalOpenRestaurants;
-          }
-        });
+            if (card.cardType === "seeAllRestaurants") {
+              // console.log(card);
+              setTotalRestaurants(card?.data?.data?.totalRestaurants);
+              setAllRestaurants(card?.data?.data?.cards);
+              setfilteredRestaurants(card?.data?.data?.cards);
+              totalOpenRestaurants.current =
+                card?.data?.data?.totalOpenRestaurants;
+            }
+          });
+        } else {
+          console.log("filter getres")
+          const arr = json.data.cards;
+          const restaurantList = arr.map((item) => {
+            return item.data;
+          });
+          setfilteredRestaurants(restaurantList);
+          setIsLoading(false);
+        }
       } else {
+        console.log("heelo");
         const arr = json?.data?.cards;
         const restaurantList = arr.map((item) => {
           return item?.data;
@@ -67,7 +85,8 @@ const Body = () => {
       if (
         window.innerHeight + document.documentElement.scrollTop + 10 >=
           document.documentElement.scrollHeight &&
-        offset + 16 <= totalOpenRestaurants.current
+        offset + 16 <= totalOpenRestaurants.current &&
+        !searching
       ) {
         setIsLoading(true);
         setOffset(offset + 16);
@@ -90,12 +109,29 @@ const Body = () => {
 
   useEffect(() => {
     // console.log("useEffect called offset", offset, latitude);
-    if (offset) {
-      getRestaurants(`${API_URL3}offset=${offset}&`);
+    if (offset && !searching) {
+      getRestaurants(`${API_URL3}offset=${offset}&sortBy=${filter}&`);
     }
     window.addEventListener("scroll", handelInfiniteScroll);
     return () => window.removeEventListener("scroll", handelInfiniteScroll);
   }, [offset]);
+
+  useEffect(() => {
+    if (allRestaurants.length > 0 && !searching) {
+      console.log("filter useeffct");
+      getRestaurants(`${API_URL3}&sortBy=${filter}&`);
+      setIsLoading(true);
+    }
+  }, [filter, searching]);
+
+  function handleFilter(event) {
+    console.log(event.target.dataset.filtertype);
+    setFilter(event.target.dataset.filtertype);
+    setOffset(0);
+    setSearching(false);
+    setfilteredRestaurants("");
+    setSearchText("");
+  }
 
   const onlineStatus = useOnlineStatus();
 
@@ -117,7 +153,7 @@ const Body = () => {
             ></img>
 
             {/* {search bar} */}
-            <div className="my-12 flex flex-grow items-center justify-center  z-10 ">
+            <div className="my-12 flex flex-grow items-center justify-center  z-[2] ">
               <div className="flex justify-between w-1/3 border border-slate-400 border-1 focus:w-2/3  ">
                 <input
                   data-testid="search-input"
@@ -135,6 +171,7 @@ const Body = () => {
                   onClick={() => {
                     const filtedData = filterData(searchText, allRestaurants);
                     setfilteredRestaurants(filtedData);
+                    setSearching(true);
                   }}
                 >
                   <svg
@@ -157,38 +194,68 @@ const Body = () => {
             </div>
           </div>
           {/* restaurants */}
-          <div className=" ">
-            <div className="filterHeader border-b-2 flex justify-between px-16 my-8 items-center">
-              <span className="text-[26px] font-semibold text-gray-800">460 restaurants</span>
-              <div className="filterList flex gap-4 px-2 font-medium text-slate-600"> 
-                <button>Relevance</button>
-                <button>Delivery Time</button>
-                <button>Rating</button>
-                <button>Cost: Low To High</button>
-                <button>Cost: High To Low</button>
+          <div className="">
+            <div className="filterHeader lg:px-12 md:px-4 border-b-2 flex justify-between  my-8 ">
+              <span className="text-[26px] font-semibold  text-gray-800 whitespace-nowrap">
+                {totalRestaurants} restaurants
+              </span>
+              <div
+                className="filterList flex gap-4 px-2   text-slate-600 whitespace-nowrap font-semibold"
+                onClick={(e) => handleFilter(e)}
+              >
+                <button
+                  className="hover:border-b border-black hover:text-black "
+                  data-filtertype="RELEVANCE"
+                >
+                  Relevance
+                </button>
+                <button
+                  className="hover:border-b border-black hover:text-black "
+                  data-filtertype="DELIVERY_TIME"
+                >
+                  Delivery Time
+                </button>
+                <button
+                  className="hover:border-b border-black hover:text-black "
+                  data-filtertype="RATING"
+                >
+                  Rating
+                </button>
+                <button
+                  className="hover:border-b border-black hover:text-black "
+                  data-filtertype="COST_FOR_TWO"
+                >
+                  Cost: Low To High
+                </button>
+                <button
+                  className="hover:border-b border-black hover:text-black"
+                  data-filtertype="COST_FOR_TWO_H2L"
+                >
+                  Cost: High To Low
+                </button>
               </div>
             </div>
             <div
               className="restaurant flex flex-wrap justify-center "
               data-testid="res-list"
             >
-              {filteredRestaurants?.length === 0 ? (
-                <p className="w-full font-bold text-center">
-                  No Restaurants Found
-                </p>
-              ) : (
-                filteredRestaurants.map((restaurant) => {
-                  return (
-                    <Link
-                      to={"/restaurant/" + restaurant.data.id}
-                      key={restaurant.data.id}
-                    >
-                      <RestaurantCard {...restaurant.data} />
-                    </Link>
-                  );
-                })
-              )}
-              {isLoading && <Shimmer />}
+              {filteredRestaurants?.length === 0
+                ? searchText && (
+                    <p className="w-full font-bold text-center">
+                      No Restaurants Found
+                    </p>
+                  )
+                : filteredRestaurants.map((restaurant) => {
+                    return (
+                      <Link
+                        to={"/restaurant/" + restaurant.data.id}
+                        key={restaurant.data.id}
+                      >
+                        <RestaurantCard {...restaurant.data} />
+                      </Link>
+                    );
+                  })}
+              {isLoading && searchText.length === 0 && <Shimmer />}
             </div>
           </div>
         </div>
