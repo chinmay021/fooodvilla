@@ -15,7 +15,7 @@ const RestaurantCard = ({
         src={IMG_CDN_URL + cloudinaryImageId}
         alt="image of a dish from the restaurant"
       ></img>
-      <span className="block font-bold text-md mt-3 ">{name.length > 20 ? name.slice(0, 20) + "..." : name}</span>
+      <span className="block font-bold text-md mt-3 ">{name?.length > 20 ? name.slice(0, 20) + "..." : name}</span>
       <span className="mt-3 text-gray-600 text-xs">{cuisines?.join(", ")}</span>
       <div className="mt-3 mb-3 flex items-center justify-between">
         <span

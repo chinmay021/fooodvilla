@@ -126,11 +126,15 @@ const Body = () => {
 
   function handleFilter(event) {
     console.log(event.target.dataset.filtertype);
-    setFilter(event.target.dataset.filtertype);
-    setOffset(0);
-    setSearching(false);
-    setfilteredRestaurants("");
-    setSearchText("");
+    
+    if(filter !== event.target.dataset.filtertype || searching){
+      setFilter(event.target.dataset.filtertype);
+      setOffset(0);
+      setSearching(false);
+      setfilteredRestaurants("");
+      setSearchText("");
+    }
+    
   }
 
   const onlineStatus = useOnlineStatus();
@@ -245,7 +249,7 @@ const Body = () => {
                       No Restaurants Found
                     </p>
                   )
-                : filteredRestaurants.map((restaurant) => {
+                : filteredRestaurants.filter(restaurant => restaurant.type === 'restaurant').map((restaurant) => {
                     return (
                       <Link
                         to={"/restaurant/" + restaurant.data.id}
