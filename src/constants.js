@@ -25,8 +25,10 @@ export const API_URL2 =
   CORS_PROXY_URL +
   "dapi/restaurants/list/v5?lat=20.351841&lng=85.805154&page_type=DESKTOP_WEB_LISTING";
 
+// export const FETCH_MENU_URL =
+//   CORS_PROXY_URL + "dapi/menu/v4/full?lat=20.351841&lng=85.805154&menuId=";
 export const FETCH_MENU_URL =
-  CORS_PROXY_URL + "dapi/menu/v4/full?lat=20.351841&lng=85.805154&menuId=";
+  CORS_PROXY_URL + "/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.8235&lng=86.2304589&submitAction=ENTER&restaurantId=";
 
 export const GITHUB_LINK = "https://github.com/chinmay021";
 
