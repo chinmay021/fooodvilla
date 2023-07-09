@@ -10,7 +10,7 @@ const RestaurantCard = ({
 }) => {
   return (
     <div className="flex flex-col overflow-hidden m-3 p-3 w-60  rounded-sm hover:shadow-xl duration-300 font-poppins bg-white shadow-sm">
-      <img
+      <img loading="lazy"
         className="w-full border rounded-sm"
         src={IMG_CDN_URL + cloudinaryImageId}
         alt="image of a dish from the restaurant"
@@ -22,11 +22,11 @@ const RestaurantCard = ({
           className="w-12 text-center border rounded-md text-white text-xs mr-2"
           style={
             avgRating >= 4
-              ? { backgroundColor: "#48c479" }
+              ? { backgroundColor: "#1db458" }
               : avgRating >= 3
               ? { backgroundColor: "#DB7C38" }
               : avgRating === "--"
-              ? { backgroundColor: "#48c479" }
+              ? { backgroundColor: "#1db458" }
               : { backgroundColor: "#E31837" }
           }
         >
