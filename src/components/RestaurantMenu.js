@@ -66,7 +66,7 @@ const RestaurantMenu = () => {
         category.innerText === ele.innerText.slice(0, category.innerText.length)
     )[0];
     let parentContainer = document.querySelector(".menu-wrapper");
-    topOffsetValue =
+    let topOffsetValue =
       window.innerWidth < 1090
         ? targetElement.offsetTop - "750"
         : targetElement.offsetTop - "530";
@@ -78,9 +78,12 @@ const RestaurantMenu = () => {
 
   const handleCategoryToggle = (e) => {
     console.log(e.target);
-      if (Array.from(e.target.classList).find(el => el.includes("category-heading"))) {
-        
-      }
+    if (
+      Array.from(e.target.classList).find((el) =>
+        el.includes("category-heading")
+      )
+    ) {
+    }
   };
 
   return restaurant === null ? (
