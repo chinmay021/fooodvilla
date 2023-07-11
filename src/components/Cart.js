@@ -53,6 +53,7 @@ const Cart = () => {
       </div>
       <div className="border-b-2">
         {cartItems.map((item) => {
+          console.log(item);
           return (
             <div
               key={item.id}
@@ -60,7 +61,7 @@ const Cart = () => {
             >
               <img
                 className="w-12"
-                src={IMG__MENU_ITEM_CDN_URL + item?.cloudinaryImageId}
+                src={IMG__MENU_ITEM_CDN_URL + item?.imageId}
                 alt=""
                 onError={(event) => (event.target.style.display = "block")}
               />
