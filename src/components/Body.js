@@ -8,7 +8,7 @@ import useOnlineStatus from "../utils/useOnlineStatus";
 import LocationContext from "../utils/LocationContext";
 // import heroImg from "../../assets/hero-img.jpg";
 import heroImg from "../../assets/hero-img.jpg";
-import BodyShimmer from "./bodyShimmer";
+import BodyShimmer from "./BodyShimmer";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
