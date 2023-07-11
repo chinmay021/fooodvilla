@@ -41,7 +41,7 @@ const Body = () => {
       if (url === API_URL || offset === 0) {
         
         if (url === API_URL) {
-          console.log("zzzzz");
+          // console.log("zzzzz");
           json?.data?.cards.forEach((card) => {
             // console.log(card);
             if (card.cardType === "seeAllRestaurants") {
@@ -54,7 +54,7 @@ const Body = () => {
             }
           });
         } else {
-          console.log("filter getres")
+          // console.log("filter getres")
           const arr = json.data.cards;
           const restaurantList = arr.map((item) => {
             return item.data;
@@ -63,7 +63,7 @@ const Body = () => {
           setIsLoading(false);
         }
       } else {
-        console.log("heelo");
+        // console.log("heelo");
         const arr = json?.data?.cards;
         const restaurantList = arr.map((item) => {
           return item?.data;
@@ -118,14 +118,14 @@ const Body = () => {
 
   useEffect(() => {
     if (allRestaurants.length > 0 && !searching) {
-      console.log("filter useeffct");
+      // console.log("filter useeffct");
       getRestaurants(`${API_URL3}&sortBy=${filter}&`);
       setIsLoading(true);
     }
   }, [filter, searching]);
 
   function handleFilter(event) {
-    console.log(event.target.dataset.filtertype);
+    // console.log(event.target.dataset.filtertype);
     
     if(filter !== event.target.dataset.filtertype || searching){
       setFilter(event.target.dataset.filtertype);

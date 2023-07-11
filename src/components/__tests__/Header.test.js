@@ -14,10 +14,10 @@ test("Logo should load on rendering header", () => {
       </Provider>
     </StaticRouter>
   );
-  console.log(header);
+  // console.log(header);
 
   const logo = header.getAllByTestId("logo");
-  console.log(logo[0]);
+  // console.log(logo[0]);
   expect(logo[0].src).toBe("http://localhost/dummyLogo.png");
   //check if logo is loaded
 });

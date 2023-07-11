@@ -11,7 +11,7 @@ const LocationSideBar = ({ isVisible, setToggle }) => {
   const [loading, setLoading] = useState(true);
 
   const getAutoCompletion = async (text) => {
-    console.log("text", text);
+    // console.log("text", text);
     const suggestions = await fetch(
       `https://autocomplete.search.hereapi.com/v1/autocomplete?q=${text}&apiKey=${process.env.REACT_APP_HERE_API_KEY}&in=countryCode%3AIND`
     );

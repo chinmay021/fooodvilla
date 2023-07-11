@@ -77,12 +77,22 @@ const RestaurantMenu = () => {
   };
 
   const handleCategoryToggle = (e) => {
-    console.log(e.target);
+    // console.log(e.target.tagName, e.target.parentNode);
+    let element = e.target;
     if (
-      Array.from(e.target.classList).find((el) =>
-        el.includes("category-heading")
-      )
+      e.target.tagName.toLowerCase() === "svg" ||
+      e.target.tagName.toLowerCase() === "polyline"
     ) {
+      element = e.target.closest(".category-heading");
+      let svgTag = e.target.closest("svg");
+      svgTag.classList.toggle("rotate-180");
+      let parent = element.closest(".category-heading");
+      let nextSibling = parent.nextElementSibling;
+      // console.log(parent, nextSibling)
+      if (nextSibling.classList.contains("items-wrapper")) {
+        // console.log(nextSibling);
+        nextSibling.classList.toggle("hidden");
+      }
     }
   };
 
@@ -222,7 +232,7 @@ const RestaurantMenu = () => {
                                       {subCategory.title}
                                     </span>
                                     <span>
-                                      <FiChevronDown className="text-2xl cursor-pointer" />
+                                      <FiChevronDown className="category-toggle text-2xl cursor-pointer " />
                                     </span>
                                   </div>
                                   <div className="items-wrapper">
