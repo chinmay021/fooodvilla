@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense, useCallback, useEffect } from "react";
+import { useState, lazy, Suspense, useEffect } from "react";
 // import SuggestionDropDown from "./SuggestionDropDown";
 import { GrFormClose } from "react-icons/gr";
 import useDebounce from "../utils/useDebounce";

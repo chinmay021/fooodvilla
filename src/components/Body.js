@@ -154,6 +154,7 @@ const Body = () => {
             <img
               src="https://b.zmtcdn.com/web_assets/81f3ff974d82520780078ba1cfbd453a1583259680.png"
               className="h-full w-full absolute object-cover "
+              alt="food background image"
             ></img>
 
             {/* {search bar} */}
@@ -172,6 +173,7 @@ const Body = () => {
                 <button
                   data-testid="search-btn"
                   className="p-3"
+                  aria-label="search"
                   onClick={() => {
                     const filtedData = filterData(searchText, allRestaurants);
                     setfilteredRestaurants(filtedData);

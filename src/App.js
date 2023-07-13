@@ -1,16 +1,9 @@
-import React, {
-  lazy,
-  Suspense,
-  useState,
-  useEffect,
-} from "react";
+import React, { lazy, Suspense, useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
 import Error from "./components/Error";
-import Help from "./components/Help";
-import RestaurantMenu from "./components/RestaurantMenu";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./utils/store";
@@ -19,8 +12,10 @@ import LocationContext from "./utils/LocationContext";
 import useGetLocation from "./utils/useGetLocation";
 import AddressContext from "./utils/AddressContext";
 import useGetAddress from "./utils/useGetAddress";
-import Checkout from "./components/Checkout";
-import Success from "./components/Success";
+// import RestaurantMenu from "./components/RestaurantMenu";
+// import Help from "./components/Help";
+// import Checkout from "./components/Checkout";
+// import Success from "./components/Success";
 
 // App Layout
 /**
@@ -40,32 +35,16 @@ import Success from "./components/Success";
  *  - Links
  *  - CopyRights
  */
+const RestaurantMenu = lazy(() => import("./components/RestaurantMenu"));
+const Checkout = lazy(() => import("./components/Checkout"));
+const Success = lazy(() => import("./components/Success"));
+const Help = lazy(() => import("./components/Help"));
 
 const About = lazy(() => import("./components/About"));
 
 const AppLayout = () => {
   const [locationGlobal, setLocationGlobal] = useState(null);
   const [addressGlobal, setAddressGlobal] = useState(null);
-
-  //get address code
-  // const getAddress = async (latitude, longitude) => {
-  //   console.log("get address api called", latitude, longitude);
-  //   const options = {
-  //     method: "GET",
-  //     headers: {
-  //       "X-RapidAPI-Key": `${process.env.REACT_APP_RAPID_API_KEY}`,
-  //       "X-RapidAPI-Host": "trueway-geocoding.p.rapidapi.com",
-  //     },
-  //   };
-  //   const response = await fetch(
-  //     `https://trueway-geocoding.p.rapidapi.com/ReverseGeocode?location=${latitude}%20%2C${longitude}&language=en`,
-  //     options
-  //   );
-  //   console.log(latitude, longitude);
-  //   const data = await response.json();
-  //   console.log(data);
-  //   setAddressGlobal(data?.results?.[0]?.address);
-  // };
 
   const getAddress = async (latitude, longitude) => {
     const response = await fetch(
@@ -143,7 +122,9 @@ const AppLayout = () => {
             }}
           >
             <Header />
-            <Outlet />
+            <Suspense fallback={<div>loading...</div>}>
+              <Outlet />
+            </Suspense>
             <Footer />
           </LocationContext.Provider>
         </AddressContext.Provider>
@@ -164,11 +145,7 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/about",
-        element: (
-          <Suspense>
-            <About />
-          </Suspense>
-        ),
+        element: <About />,
       },
       {
         path: "/help",

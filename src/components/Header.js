@@ -45,7 +45,11 @@ const Header = () => {
             <Link to="/help">Help</Link>
           </li>
           <li className="pt-3 px-3 mr-10">
-            <Link to="/cart" className="flex gap-1 items-center">
+            <Link
+              to="/cart"
+              className="flex gap-1 items-center"
+              aria-label="link to cart page"
+            >
               <BsCart4 className="inline text-2xl text-orange-400" />
               <span className=" font-bold text-orange-400 p-[1px]">
                 {cartTotalCount ? (
@@ -57,7 +61,7 @@ const Header = () => {
             </Link>
           </li>
           <div ref={locationSideBarRef}>
-            <li className="pt-3 px-3 mr-10">
+            <div className="pt-3 px-3 mr-10">
               <button
                 onClick={() => {
                   setToggleLocationBar(true);
@@ -67,7 +71,7 @@ const Header = () => {
                 <TbCurrentLocation className="text-xl text-orange-400" />
                 <span>location</span>
               </button>
-            </li>
+            </div>
             {/* <input
               className="border ml-3 pl-5"
               placeholder="enter your location"
