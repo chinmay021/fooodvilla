@@ -23,25 +23,25 @@ const Header = () => {
   const locationSideBarRef = useClickOutside(() => setToggleLocationBar(false));
 
   return (
-    <div className="flex justify-between items-center  shadow-md z-10 w-full">
+    <div className="flex justify-between items-center  shadow-lg z-10 w-full bg-slate-50 ">
       {/* {console.log("header re-render")} */}
       <div className="flex items-center">
         <Logo />
-        <span className="font-poppins text-xs text-orange-400">
+        <span className="font-poppins text-xs text-orange-500">
           {addressGlobal?.length > 50
             ? `${addressGlobal?.slice(0, 50)}...`
             : addressGlobal}
         </span>
       </div>
       <div>
-        <ul className="flex list-none pr-14 font-poppins">
-          <li className="p-3 mr-10">
+        <ul className="flex list-none pr-14 font-semibold text-gray-700 ">
+          <li className="p-3 mr-10 hover:text-black">
             <Link to="/">Home</Link>
           </li>
-          <li className="p-3 mr-10">
+          <li className="p-3 mr-10 hover:text-black">
             <Link to="/about">About</Link>
           </li>
-          <li className="p-3 mr-10">
+          <li className="p-3 mr-10 hover:text-black">
             <Link to="/help">Help</Link>
           </li>
           <li className="pt-3 px-3 mr-10">
@@ -61,12 +61,12 @@ const Header = () => {
             </Link>
           </li>
           <div ref={locationSideBarRef}>
-            <div className="pt-3 px-3 mr-10">
+            <div className="pt-3 px-3 mr-10 ">
               <button
                 onClick={() => {
                   setToggleLocationBar(true);
                 }}
-                className="flex items-center"
+                className="flex items-center hover:text-black"
               >
                 <TbCurrentLocation className="text-xl text-orange-400" />
                 <span>location</span>

@@ -236,7 +236,7 @@ const Body = () => {
 
             {/* {search bar} */}
             <div className="my-12 flex flex-grow items-center justify-center  z-[2] ">
-              <div className="flex justify-between w-1/3 border border-slate-400 border-1 focus:w-2/3  ">
+              <div className="flex justify-between w-1/3 border border-slate-600 border-1 focus:w-2/3 rounded-lg overflow-hidden   ">
                 <input
                   data-testid="search-input"
                   type="text"
@@ -252,7 +252,7 @@ const Body = () => {
                 />
                 <button
                   data-testid="search-btn"
-                  className="p-3"
+                  className="p-3 bg-black/80"
                   aria-label="search"
                   onClick={() => {
                     const filtedData = filterData(searchText, allRestaurants);
@@ -262,9 +262,9 @@ const Body = () => {
                 >
                   <svg
                     aria-hidden="true"
-                    className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                    className="w-5 h-5"
                     fill="none"
-                    stroke="currentColor"
+                    stroke="white"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
