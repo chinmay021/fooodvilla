@@ -164,7 +164,7 @@ const Body = () => {
     <BodyShimmer />
   ) : (
     <>
-    {console.log('filteredRestaurants', filteredRestaurants)}
+    {/* {console.log('filteredRestaurants', filteredRestaurants)} */}
       <div className="w-[80vw] flex flex-col justify-center">
         <div className="bg-slate-50 flex  flex-col items-center justify-center ">
           <div className="hero-section  relative h-[30rem] flex  items-center w-full">
