@@ -32,42 +32,51 @@ const Body = () => {
 
   async function getRestaurants(url) {
     try {
-      // console.log(url, latitude, longitude);
+      console.log(url, latitude, longitude);
       //lat=22.814794130574803&lng=86.09871324151756
       const data = await fetch(`${url}lat=${latitude}&lng=${longitude}`);
       const json = await data.json();
 
-      // console.log(json.data.cards);
+      console.log(json.data.cards);
       if (url === API_URL || offset === 0) {
         
         if (url === API_URL) {
-          // console.log("zzzzz");
-          json?.data?.cards.forEach((card) => {
-            // console.log(card);
-            if (card.cardType === "seeAllRestaurants") {
-              // console.log(card);
-              setTotalRestaurants(card?.data?.data?.totalRestaurants);
-              setAllRestaurants(card?.data?.data?.cards);
-              setfilteredRestaurants(card?.data?.data?.cards);
-              totalOpenRestaurants.current =
-                card?.data?.data?.totalOpenRestaurants;
-            }
-          });
+          console.log("zzzzz");
+          // json?.data?.cards.forEach((card) => {
+          //   console.log(card);
+          //   if (card.cardType === "seeAllRestaurants") {
+          //     console.log(card);
+          //     setTotalRestaurants(card?.data?.data?.totalRestaurants);
+          //     setAllRestaurants(card?.data?.data?.cards);
+          //     setfilteredRestaurants(card?.data?.data?.cards);
+          //     totalOpenRestaurants.current =
+          //       card?.data?.data?.totalOpenRestaurants;
+          //   }
+          // });
+            let gridWidget = json.data.cards.filter(ele => ele.card.card['@type'] === 'type.googleapis.com/swiggy.gandalf.widgets.v2.GridWidget').filter(ele => ele.card.card.gridElements.infoWithStyle['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.FavouriteRestaurantInfoWithStyle').flatMap(ele => ele.card.card.gridElements.infoWithStyle.restaurants);
+             gridWidget = gridWidget.filter((ele, idx) => idx === gridWidget.findIndex(obj => obj.info.id === ele.info.id));
+            console.log(gridWidget);
+            setAllRestaurants(gridWidget);
+            setfilteredRestaurants(gridWidget);
+            totalOpenRestaurants.current = 300; // needs to be changed
+
+            setTotalRestaurants(21); // needs to be changed
+
+
         } else {
-          // console.log("filter getres")
+          console.log("filter getres")
           const arr = json.data.cards;
           const restaurantList = arr.map((item) => {
-            return item.data;
-          });
+          return item.card.card.gridElements.infoWithStyle.restautants;
+        });
           setfilteredRestaurants(restaurantList);
           setIsLoading(false);
         }
       } else {
-        // console.log("heelo");
-        const arr = json?.data?.cards;
-        const restaurantList = arr.map((item) => {
-          return item?.data;
-        });
+        console.log("heelo");
+        const arr = json.data.cards;
+        console.log('scrolling', arr)
+        let restaurantList = json.data.cards.filter(ele => ele.card.card['@type'] === 'type.googleapis.com/swiggy.gandalf.widgets.v2.GridWidget').filter(ele => ele.card.card.gridElements.infoWithStyle['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.FavouriteRestaurantInfoWithStyle').flatMap(ele => ele.card.card.gridElements.infoWithStyle.restaurants);
         setAllRestaurants([...allRestaurants, ...restaurantList]);
         setfilteredRestaurants([...filteredRestaurants, ...restaurantList]);
         setIsLoading(false);
@@ -97,7 +106,7 @@ const Body = () => {
   };
 
   useEffect(() => {
-    // console.log("useEffect called latitude", latitude);
+    console.log("useEffect called latitude", latitude);
     if (latitude && longitude) {
       // offset ? getRestaurants(API_URL3) : getRestaurants();
       getRestaurants(API_URL);
@@ -107,33 +116,40 @@ const Body = () => {
     // return () => window.removeEventListener("scroll", handelInfiniteScroll);
   }, [latitude, longitude]);
 
-  useEffect(() => {
-    // console.log("useEffect called offset", offset, latitude);
-    if (offset && !searching) {
-      getRestaurants(`${API_URL3}offset=${offset}&sortBy=${filter}&`);
-    }
-    window.addEventListener("scroll", handelInfiniteScroll);
-    return () => window.removeEventListener("scroll", handelInfiniteScroll);
-  }, [offset]);
+  // useEffect(() => {
+  //   // console.log("useEffect called offset", offset, latitude);
+  //   if (offset && !searching) {
+  //     getRestaurants(`${API_URL3}offset=${offset}&sortBy=${filter}&`);
+  //   }
+  //   window.addEventListener("scroll", handelInfiniteScroll);
+  //   return () => window.removeEventListener("scroll", handelInfiniteScroll);
+  // }, [offset]);
 
-  useEffect(() => {
-    if (allRestaurants.length > 0 && !searching) {
-      // console.log("filter useeffct");
-      getRestaurants(`${API_URL3}&sortBy=${filter}&`);
-      setIsLoading(true);
-    }
-  }, [filter, searching]);
+  // useEffect(() => {
+  //   if (allRestaurants.length > 0 && !searching) {
+  //     // console.log("filter useeffct");
+  //     getRestaurants(`${API_URL3}&sortBy=${filter}&`);
+  //     setIsLoading(true);
+  //   }
+  // }, [filter, searching]);
 
   function handleFilter(event) {
     // console.log(event.target.dataset.filtertype);
     
-    if(filter !== event.target.dataset.filtertype || searching){
-      setFilter(event.target.dataset.filtertype);
-      setOffset(0);
-      setSearching(false);
-      setfilteredRestaurants("");
-      setSearchText("");
-    }
+    // if(filter !== event.target.dataset.filtertype || searching){
+    //   setFilter(event.target.dataset.filtertype);
+    //   setOffset(0);
+    //   setSearching(false);
+    //   setfilteredRestaurants("");
+    //   setSearchText("");
+    // }
+
+    /*  get integer from string cost of two
+    
+        To get integer value from string, use this code const str = '₹200 for two';
+        const int = str.match(/\d+/g)
+        console.log(+int) // 200
+    */
     
   }
 
@@ -144,10 +160,11 @@ const Body = () => {
     return <p className="font-bold text-center">You are offline ! 🔴</p>;
   }
 
-  return allRestaurants?.length === 0 ? (
+  return allRestaurants.length === 0 ? (
     <BodyShimmer />
   ) : (
     <>
+    {console.log('filteredRestaurants', filteredRestaurants)}
       <div className="w-[80vw] flex flex-col justify-center">
         <div className="bg-slate-50 flex  flex-col items-center justify-center ">
           <div className="hero-section  relative h-[30rem] flex  items-center w-full">
@@ -168,6 +185,9 @@ const Body = () => {
                   value={searchText}
                   onChange={(e) => {
                     setSearchText(e.target.value);
+                    if(e.target.value === ''){
+                      setfilteredRestaurants(allRestaurants);
+                    }
                   }}
                 />
                 <button
@@ -245,19 +265,19 @@ const Body = () => {
               className="restaurant flex flex-wrap justify-center "
               data-testid="res-list"
             >
-              {filteredRestaurants?.length === 0
+              {filteredRestaurants.length === 0
                 ? searchText && (
                     <p className="w-full font-bold text-center">
                       No Restaurants Found
                     </p>
                   )
-                : filteredRestaurants.filter(restaurant => restaurant.type === 'restaurant').map((restaurant) => {
+                : filteredRestaurants.map((restaurant) => {
                     return (
                       <Link
-                        to={"/restaurant/" + restaurant.data.id}
-                        key={restaurant.data.id}
+                        to={"/restaurant/" + restaurant.info.id}
+                        key={restaurant.info.id}
                       >
-                        <RestaurantCard {...restaurant.data} />
+                        <RestaurantCard {...restaurant.info} />
                       </Link>
                     );
                   })}
