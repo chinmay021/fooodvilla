@@ -11,7 +11,7 @@ const RestaurantCard = ({
   return (
     
     <div className="flex flex-col overflow-hidden m-3 p-3 w-60  rounded-sm hover:shadow-xl duration-300 font-poppins bg-white shadow-sm">
-      {console.log(name, cuisines, cloudinaryImageId, costForTwo, avgRating)}
+      {/* {console.log(name, cuisines, cloudinaryImageId, costForTwo, avgRating)} */}
       <img loading="lazy"
         className="w-full border rounded-sm"
         src={IMG_CDN_URL + cloudinaryImageId}

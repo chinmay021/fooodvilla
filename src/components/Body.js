@@ -32,16 +32,16 @@ const Body = () => {
 
   async function getRestaurants(url) {
     try {
-      console.log(url, latitude, longitude);
+      // console.log(url, latitude, longitude);
       //lat=22.814794130574803&lng=86.09871324151756
       const data = await fetch(`${url}lat=${latitude}&lng=${longitude}`);
       const json = await data.json();
 
-      console.log(json.data.cards);
+      // console.log(json.data.cards);
       if (url === API_URL || offset === 0) {
         
         if (url === API_URL) {
-          console.log("zzzzz");
+          // console.log("zzzzz");
           // json?.data?.cards.forEach((card) => {
           //   console.log(card);
           //   if (card.cardType === "seeAllRestaurants") {
@@ -55,7 +55,7 @@ const Body = () => {
           // });
             let gridWidget = json.data.cards.filter(ele => ele.card.card['@type'] === 'type.googleapis.com/swiggy.gandalf.widgets.v2.GridWidget').filter(ele => ele.card.card.gridElements.infoWithStyle['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.FavouriteRestaurantInfoWithStyle').flatMap(ele => ele.card.card.gridElements.infoWithStyle.restaurants);
              gridWidget = gridWidget.filter((ele, idx) => idx === gridWidget.findIndex(obj => obj.info.id === ele.info.id));
-            console.log(gridWidget);
+            // console.log(gridWidget);
             setAllRestaurants(gridWidget);
             setfilteredRestaurants(gridWidget);
             totalOpenRestaurants.current = 300; // needs to be changed
@@ -64,7 +64,7 @@ const Body = () => {
 
 
         } else {
-          console.log("filter getres")
+          // console.log("filter getres")
           const arr = json.data.cards;
           const restaurantList = arr.map((item) => {
           return item.card.card.gridElements.infoWithStyle.restautants;
@@ -75,7 +75,7 @@ const Body = () => {
       } else {
         console.log("heelo");
         const arr = json.data.cards;
-        console.log('scrolling', arr)
+        // console.log('scrolling', arr)
         let restaurantList = json.data.cards.filter(ele => ele.card.card['@type'] === 'type.googleapis.com/swiggy.gandalf.widgets.v2.GridWidget').filter(ele => ele.card.card.gridElements.infoWithStyle['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.FavouriteRestaurantInfoWithStyle').flatMap(ele => ele.card.card.gridElements.infoWithStyle.restaurants);
         setAllRestaurants([...allRestaurants, ...restaurantList]);
         setfilteredRestaurants([...filteredRestaurants, ...restaurantList]);
@@ -106,7 +106,7 @@ const Body = () => {
   };
 
   useEffect(() => {
-    console.log("useEffect called latitude", latitude);
+    // console.log("useEffect called latitude", latitude);
     if (latitude && longitude) {
       // offset ? getRestaurants(API_URL3) : getRestaurants();
       getRestaurants(API_URL);
