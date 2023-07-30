@@ -3,7 +3,7 @@ import RestaurantCard from "./RestaurantCard";
 import { API_URL, API_URL3 } from "../constants";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-import { filterData } from "../utils/helper";
+import { filterData, getNumberFromString } from "../utils/helper";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import LocationContext from "../utils/LocationContext";
 // import heroImg from "../../assets/hero-img.jpg";
@@ -39,7 +39,6 @@ const Body = () => {
 
       // console.log(json.data.cards);
       if (url === API_URL || offset === 0) {
-        
         if (url === API_URL) {
           // console.log("zzzzz");
           // json?.data?.cards.forEach((card) => {
@@ -53,22 +52,36 @@ const Body = () => {
           //       card?.data?.data?.totalOpenRestaurants;
           //   }
           // });
-            let gridWidget = json.data.cards.filter(ele => ele.card.card['@type'] === 'type.googleapis.com/swiggy.gandalf.widgets.v2.GridWidget').filter(ele => ele.card.card.gridElements.infoWithStyle['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.FavouriteRestaurantInfoWithStyle').flatMap(ele => ele.card.card.gridElements.infoWithStyle.restaurants);
-             gridWidget = gridWidget.filter((ele, idx) => idx === gridWidget.findIndex(obj => obj.info.id === ele.info.id));
-            // console.log(gridWidget);
-            setAllRestaurants(gridWidget);
-            setfilteredRestaurants(gridWidget);
-            totalOpenRestaurants.current = 300; // needs to be changed
+          let gridWidget = json.data.cards
+            .filter(
+              (ele) =>
+                ele.card.card["@type"] ===
+                "type.googleapis.com/swiggy.gandalf.widgets.v2.GridWidget"
+            )
+            .filter(
+              (ele) =>
+                ele.card.card.gridElements.infoWithStyle["@type"] ===
+                "type.googleapis.com/swiggy.presentation.food.v2.FavouriteRestaurantInfoWithStyle"
+            )
+            .flatMap(
+              (ele) => ele.card.card.gridElements.infoWithStyle.restaurants
+            );
+          gridWidget = gridWidget.filter(
+            (ele, idx) =>
+              idx === gridWidget.findIndex((obj) => obj.info.id === ele.info.id)
+          );
+          // console.log(gridWidget);
+          setAllRestaurants(gridWidget);
+          setfilteredRestaurants(gridWidget);
+          totalOpenRestaurants.current = 300; // needs to be changed
 
-            setTotalRestaurants(21); // needs to be changed
-
-
+          setTotalRestaurants(21); // needs to be changed
         } else {
           // console.log("filter getres")
           const arr = json.data.cards;
           const restaurantList = arr.map((item) => {
-          return item.card.card.gridElements.infoWithStyle.restautants;
-        });
+            return item.card.card.gridElements.infoWithStyle.restautants;
+          });
           setfilteredRestaurants(restaurantList);
           setIsLoading(false);
         }
@@ -76,7 +89,20 @@ const Body = () => {
         console.log("heelo");
         const arr = json.data.cards;
         // console.log('scrolling', arr)
-        let restaurantList = json.data.cards.filter(ele => ele.card.card['@type'] === 'type.googleapis.com/swiggy.gandalf.widgets.v2.GridWidget').filter(ele => ele.card.card.gridElements.infoWithStyle['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.FavouriteRestaurantInfoWithStyle').flatMap(ele => ele.card.card.gridElements.infoWithStyle.restaurants);
+        let restaurantList = json.data.cards
+          .filter(
+            (ele) =>
+              ele.card.card["@type"] ===
+              "type.googleapis.com/swiggy.gandalf.widgets.v2.GridWidget"
+          )
+          .filter(
+            (ele) =>
+              ele.card.card.gridElements.infoWithStyle["@type"] ===
+              "type.googleapis.com/swiggy.presentation.food.v2.FavouriteRestaurantInfoWithStyle"
+          )
+          .flatMap(
+            (ele) => ele.card.card.gridElements.infoWithStyle.restaurants
+          );
         setAllRestaurants([...allRestaurants, ...restaurantList]);
         setfilteredRestaurants([...filteredRestaurants, ...restaurantList]);
         setIsLoading(false);
@@ -135,7 +161,7 @@ const Body = () => {
 
   function handleFilter(event) {
     // console.log(event.target.dataset.filtertype);
-    
+
     // if(filter !== event.target.dataset.filtertype || searching){
     //   setFilter(event.target.dataset.filtertype);
     //   setOffset(0);
@@ -150,7 +176,40 @@ const Body = () => {
         const int = str.match(/\d+/g)
         console.log(+int) // 200
     */
-    
+    if (event.target.tagName.toLowerCase() === "button") {
+      // console.log(event.target.tagName);
+      if (event.target.dataset.filtertype === "RELEVANCE") {
+        setfilteredRestaurants(allRestaurants);
+      } else if (event.target.dataset.filtertype === "DELIVERY_TIME") {
+        let rest = [...filteredRestaurants];
+        rest.sort((a, b) => a.info.sla.deliveryTime - b.info.sla.deliveryTime);
+        setfilteredRestaurants(rest);
+      } else if (event.target.dataset.filtertype === "RATING") {
+        // console.log(event.target.dataset.filtertype);
+        let rest = [...filteredRestaurants];
+        rest.sort((a, b) => b.info.avgRatingString - a.info.avgRatingString);
+        console.log(rest);
+        setfilteredRestaurants(rest);
+      } else if (event.target.dataset.filtertype === "COST_FOR_TWO_L2H") {
+        // console.log(event.target.dataset.filtertype);
+        let rest = [...filteredRestaurants];
+        rest.sort(
+          (a, b) =>
+            getNumberFromString(a.info.costForTwo) -
+            getNumberFromString(b.info.costForTwo)
+        );
+        setfilteredRestaurants(rest);
+      } else if (event.target.dataset.filtertype === "COST_FOR_TWO_H2L") {
+        // console.log(event.target.dataset.filtertype);
+        let rest = [...filteredRestaurants];
+        rest.sort(
+          (a, b) =>
+            getNumberFromString(b.info.costForTwo) -
+            getNumberFromString(a.info.costForTwo)
+        );
+        setfilteredRestaurants(rest);
+      }
+    }
   }
 
   const onlineStatus = useOnlineStatus();
@@ -164,7 +223,8 @@ const Body = () => {
     <BodyShimmer />
   ) : (
     <>
-    {/* {console.log('filteredRestaurants', filteredRestaurants)} */}
+      {/* {console.log("rerender")} */}
+      {/* {console.log('filteredRestaurants', filteredRestaurants)} */}
       <div className="w-[80vw] flex flex-col justify-center">
         <div className="bg-slate-50 flex  flex-col items-center justify-center ">
           <div className="hero-section  relative h-[30rem] flex  items-center w-full">
@@ -185,7 +245,7 @@ const Body = () => {
                   value={searchText}
                   onChange={(e) => {
                     setSearchText(e.target.value);
-                    if(e.target.value === ''){
+                    if (e.target.value === "") {
                       setfilteredRestaurants(allRestaurants);
                     }
                   }}
@@ -249,7 +309,7 @@ const Body = () => {
                 </button>
                 <button
                   className="hover:border-b border-black hover:text-black "
-                  data-filtertype="COST_FOR_TWO"
+                  data-filtertype="COST_FOR_TWO_L2H"
                 >
                   Cost: Low To High
                 </button>
@@ -262,7 +322,7 @@ const Body = () => {
               </div>
             </div>
             <div
-              className="restaurant flex flex-wrap justify-center "
+              className="restaurant flex flex-wrap justify-center  "
               data-testid="res-list"
             >
               {filteredRestaurants.length === 0
@@ -277,7 +337,7 @@ const Body = () => {
                         to={"/restaurant/" + restaurant.info.id}
                         key={restaurant.info.id}
                       >
-                        <RestaurantCard {...restaurant.info} />
+                        <RestaurantCard {...restaurant.info} c />
                       </Link>
                     );
                   })}
