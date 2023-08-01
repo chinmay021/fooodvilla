@@ -39,6 +39,8 @@ export const LINKEDIN_LINK =
 
 // export const HERE_MAP_API_KEY = "mPRL5FAIhx5miqZZYRUSUONrrYI5p1-6kt2oG_lTMx8";
 
+export const SEARCH_API_URL = " "
+
 /* Mock FAQ */
 export const FAQ = [
   {
